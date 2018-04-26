@@ -1,10 +1,10 @@
-package com.docheinstein.sqlbuilder.models;
+package org.docheinstein.sqlbuilder.models;
 
-import com.docheinstein.sqlbuilder.SqlBindable;
-import com.docheinstein.sqlbuilder.expressions.Operators;
-import com.docheinstein.sqlbuilder.expressions.Expression;
-import com.docheinstein.sqlbuilder.statements.Select;
-import com.docheinstein.sqlbuilder.types.base.Type;
+import org.docheinstein.sqlbuilder.SqlBindable;
+import org.docheinstein.sqlbuilder.expressions.Operators;
+import org.docheinstein.sqlbuilder.expressions.Expression;
+import org.docheinstein.sqlbuilder.statements.Select;
+import org.docheinstein.sqlbuilder.types.base.Type;
 
 import java.util.ArrayList;
 import java.util.List;

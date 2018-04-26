@@ -1,7 +1,7 @@
-package com.docheinstein.sqlbuilder.clauses;
+package org.docheinstein.sqlbuilder.clauses;
 
-import com.docheinstein.sqlbuilder.Sqlable;
-import com.docheinstein.sqlbuilder.models.Column;
+import org.docheinstein.sqlbuilder.Sqlable;
+import org.docheinstein.sqlbuilder.models.Column;
 
 public class Join<T> {
 

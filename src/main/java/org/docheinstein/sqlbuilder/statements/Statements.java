@@ -1,7 +1,7 @@
-package com.docheinstein.sqlbuilder.statements;
+package org.docheinstein.sqlbuilder.statements;
 
-import com.docheinstein.sqlbuilder.models.Column;
-import com.docheinstein.sqlbuilder.models.Table;
+import org.docheinstein.sqlbuilder.models.Column;
+import org.docheinstein.sqlbuilder.models.Table;
 
 import java.util.List;
 

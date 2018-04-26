@@ -1,9 +1,9 @@
 package org.docheinstein.sqlbuilder.common;
 
-import com.docheinstein.sqlbuilder.SqlBindable;
-import com.docheinstein.sqlbuilder.Sqlable;
-import com.docheinstein.sqlbuilder.expressions.Expression;
-import com.docheinstein.sqlbuilder.models.Tuple;
+import org.docheinstein.sqlbuilder.SqlBindable;
+import org.docheinstein.sqlbuilder.Sqlable;
+import org.docheinstein.sqlbuilder.expressions.Expression;
+import org.docheinstein.sqlbuilder.models.Tuple;
 
 import java.lang.reflect.Field;
 import java.sql.*;

@@ -1,4 +1,4 @@
-package com.docheinstein.sqlbuilder.statements.base;
+package org.docheinstein.sqlbuilder.statements.base;
 
 import org.docheinstein.sqlbuilder.common.SqlBuilderUtil;
 

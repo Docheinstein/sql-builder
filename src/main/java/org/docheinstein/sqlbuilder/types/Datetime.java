@@ -1,6 +1,6 @@
-package com.docheinstein.sqlbuilder.types;
+package org.docheinstein.sqlbuilder.types;
 
-import com.docheinstein.sqlbuilder.types.base.Type;
+import org.docheinstein.sqlbuilder.types.base.Type;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

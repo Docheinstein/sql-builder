@@ -1,9 +1,9 @@
-package com.docheinstein.sqlbuilder.statements;
+package org.docheinstein.sqlbuilder.statements;
 
 import org.docheinstein.sqlbuilder.common.SqlBuilderLogger;
 import org.docheinstein.sqlbuilder.common.SqlBuilderUtil;
-import com.docheinstein.sqlbuilder.models.Table;
-import com.docheinstein.sqlbuilder.statements.base.Put;
+import org.docheinstein.sqlbuilder.models.Table;
+import org.docheinstein.sqlbuilder.statements.base.Put;
 
 import java.util.ArrayList;
 import java.util.List;

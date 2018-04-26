@@ -1,6 +1,6 @@
-package com.docheinstein.sqlbuilder.clauses;
+package org.docheinstein.sqlbuilder.clauses;
 
-import com.docheinstein.sqlbuilder.Sqlable;
+import org.docheinstein.sqlbuilder.Sqlable;
 
 public enum OrderBy implements Sqlable {
     Asc("ASC"),

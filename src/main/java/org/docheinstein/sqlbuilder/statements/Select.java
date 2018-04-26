@@ -1,14 +1,14 @@
-package com.docheinstein.sqlbuilder.statements;
+package org.docheinstein.sqlbuilder.statements;
 
-import com.docheinstein.sqlbuilder.clauses.Join;
-import com.docheinstein.sqlbuilder.clauses.OrderBy;
+import org.docheinstein.sqlbuilder.clauses.Join;
+import org.docheinstein.sqlbuilder.clauses.OrderBy;
 import org.docheinstein.sqlbuilder.common.SqlBuilderLogger;
 import org.docheinstein.sqlbuilder.common.Pair;
 import org.docheinstein.sqlbuilder.common.SqlBuilderUtil;
-import com.docheinstein.sqlbuilder.expressions.Expression;
-import com.docheinstein.sqlbuilder.expressions.Operators;
-import com.docheinstein.sqlbuilder.models.*;
-import com.docheinstein.sqlbuilder.statements.base.QueryStatement;
+import org.docheinstein.sqlbuilder.expressions.Expression;
+import org.docheinstein.sqlbuilder.expressions.Operators;
+import org.docheinstein.sqlbuilder.models.*;
+import org.docheinstein.sqlbuilder.statements.base.QueryStatement;
 
 import java.util.*;
 

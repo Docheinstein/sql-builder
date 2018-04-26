@@ -1,6 +1,6 @@
-package com.docheinstein.sqlbuilder.models;
+package org.docheinstein.sqlbuilder.models;
 
-import com.docheinstein.sqlbuilder.SqlBindable;
+import org.docheinstein.sqlbuilder.SqlBindable;
 
 import java.util.ArrayList;
 import java.util.List;

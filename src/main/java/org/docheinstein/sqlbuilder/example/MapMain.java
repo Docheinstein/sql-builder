@@ -1,4 +1,4 @@
-package com.docheinstein.sqlbuilder.example;
+package org.docheinstein.sqlbuilder.example;
 
 import java.util.*;
 

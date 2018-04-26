@@ -1,9 +1,9 @@
-package com.docheinstein.sqlbuilder.models;
+package org.docheinstein.sqlbuilder.models;
 
-import com.docheinstein.sqlbuilder.clauses.ForeignKey;
-import com.docheinstein.sqlbuilder.expressions.Expression;
-import com.docheinstein.sqlbuilder.statements.*;
-import com.docheinstein.sqlbuilder.types.base.Type;
+import org.docheinstein.sqlbuilder.clauses.ForeignKey;
+import org.docheinstein.sqlbuilder.expressions.Expression;
+import org.docheinstein.sqlbuilder.statements.*;
+import org.docheinstein.sqlbuilder.types.base.Type;
 
 import java.util.ArrayList;
 import java.util.Arrays;

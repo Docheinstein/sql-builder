@@ -1,8 +1,8 @@
-package com.docheinstein.sqlbuilder.models;
+package org.docheinstein.sqlbuilder.models;
 
-import com.docheinstein.sqlbuilder.annotations.ColumnField;
-import com.docheinstein.sqlbuilder.statements.Select;
-import com.docheinstein.sqlbuilder.statements.Update;
+import org.docheinstein.sqlbuilder.annotations.ColumnField;
+import org.docheinstein.sqlbuilder.statements.Select;
+import org.docheinstein.sqlbuilder.statements.Update;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;

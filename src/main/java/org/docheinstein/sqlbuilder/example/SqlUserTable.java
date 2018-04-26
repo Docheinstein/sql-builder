@@ -1,9 +1,9 @@
-package com.docheinstein.sqlbuilder.example;
+package org.docheinstein.sqlbuilder.example;
 
-import com.docheinstein.sqlbuilder.models.Column;
-import com.docheinstein.sqlbuilder.models.Table;
-import com.docheinstein.sqlbuilder.types.Int;
-import com.docheinstein.sqlbuilder.types.Varchar;
+import org.docheinstein.sqlbuilder.models.Column;
+import org.docheinstein.sqlbuilder.models.Table;
+import org.docheinstein.sqlbuilder.types.Int;
+import org.docheinstein.sqlbuilder.types.Varchar;
 
 public class SqlUserTable extends Table {
     public static final String TABLE_NAME = "User";

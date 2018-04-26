@@ -1,4 +1,4 @@
-package com.docheinstein.sqlbuilder;
+package org.docheinstein.sqlbuilder;
 
 import java.util.List;
 

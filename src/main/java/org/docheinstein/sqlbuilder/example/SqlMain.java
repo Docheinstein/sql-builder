@@ -1,11 +1,11 @@
-package com.docheinstein.sqlbuilder.example;
+package org.docheinstein.sqlbuilder.example;
 
-import com.docheinstein.sqlbuilder.models.Column;
-import com.docheinstein.sqlbuilder.clauses.ForeignKey;
-import com.docheinstein.sqlbuilder.models.Table;
-import com.docheinstein.sqlbuilder.types.Char;
-import com.docheinstein.sqlbuilder.types.Date;
-import com.docheinstein.sqlbuilder.types.Int;
+import org.docheinstein.sqlbuilder.models.Column;
+import org.docheinstein.sqlbuilder.clauses.ForeignKey;
+import org.docheinstein.sqlbuilder.models.Table;
+import org.docheinstein.sqlbuilder.types.Char;
+import org.docheinstein.sqlbuilder.types.Date;
+import org.docheinstein.sqlbuilder.types.Int;
 
 import java.sql.SQLException;
 

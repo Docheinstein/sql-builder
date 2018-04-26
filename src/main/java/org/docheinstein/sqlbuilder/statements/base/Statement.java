@@ -1,6 +1,6 @@
-package com.docheinstein.sqlbuilder.statements.base;
+package org.docheinstein.sqlbuilder.statements.base;
 
-import com.docheinstein.sqlbuilder.SqlBindable;
+import org.docheinstein.sqlbuilder.SqlBindable;
 
 public interface Statement extends SqlBindable {
 

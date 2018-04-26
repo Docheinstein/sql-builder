@@ -1,9 +1,9 @@
-package com.docheinstein.sqlbuilder.statements.base;
+package org.docheinstein.sqlbuilder.statements.base;
 
 import org.docheinstein.sqlbuilder.common.SqlBuilderLogger;
 import org.docheinstein.sqlbuilder.common.SqlBuilderUtil;
-import com.docheinstein.sqlbuilder.models.Column;
-import com.docheinstein.sqlbuilder.models.Tuple;
+import org.docheinstein.sqlbuilder.models.Column;
+import org.docheinstein.sqlbuilder.models.Tuple;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;

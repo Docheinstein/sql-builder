@@ -1,9 +1,9 @@
-package com.docheinstein.sqlbuilder.expressions;
+package org.docheinstein.sqlbuilder.expressions;
 
-import com.docheinstein.sqlbuilder.SqlBindable;
-import com.docheinstein.sqlbuilder.models.BindableObject;
-import com.docheinstein.sqlbuilder.models.Column;
-import com.docheinstein.sqlbuilder.statements.base.Statement;
+import org.docheinstein.sqlbuilder.SqlBindable;
+import org.docheinstein.sqlbuilder.models.BindableObject;
+import org.docheinstein.sqlbuilder.models.Column;
+import org.docheinstein.sqlbuilder.statements.base.Statement;
 
 import java.util.ArrayList;
 import java.util.List;

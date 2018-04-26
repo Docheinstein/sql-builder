@@ -1,4 +1,4 @@
-package com.docheinstein.sqlbuilder.models;
+package org.docheinstein.sqlbuilder.models;
 
 public class StringColumn<T> extends Column<T> {
     public StringColumn(String columnName) {
