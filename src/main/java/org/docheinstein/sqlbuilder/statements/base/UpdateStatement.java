@@ -1,6 +1,6 @@
 package com.docheinstein.sqlbuilder.statements.base;
 
-import com.docheinstein.sqlbuilder.common.SqlBuilderUtil;
+import org.docheinstein.sqlbuilder.common.SqlBuilderUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

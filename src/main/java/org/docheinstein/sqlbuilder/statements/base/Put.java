@@ -1,6 +1,6 @@
 package com.docheinstein.sqlbuilder.statements.base;
 
-import com.docheinstein.sqlbuilder.common.SqlBuilderUtil;
+import org.docheinstein.sqlbuilder.common.SqlBuilderUtil;
 import com.docheinstein.sqlbuilder.models.Column;
 import com.docheinstein.sqlbuilder.models.Table;
 import com.docheinstein.sqlbuilder.models.Tuple;

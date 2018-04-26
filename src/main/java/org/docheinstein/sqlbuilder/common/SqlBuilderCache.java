@@ -1,4 +1,4 @@
-package com.docheinstein.sqlbuilder.common;
+package org.docheinstein.sqlbuilder.common;
 
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;

@@ -1,4 +1,4 @@
-package com.docheinstein.sqlbuilder.common;
+package org.docheinstein.sqlbuilder.common;
 
 import com.docheinstein.sqlbuilder.SqlBindable;
 import com.docheinstein.sqlbuilder.Sqlable;

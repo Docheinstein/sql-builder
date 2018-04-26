@@ -1,8 +1,8 @@
 package com.docheinstein.sqlbuilder.statements;
 
-import com.docheinstein.sqlbuilder.common.SqlBuilderLogger;
-import com.docheinstein.sqlbuilder.common.Pair;
-import com.docheinstein.sqlbuilder.common.SqlBuilderUtil;
+import org.docheinstein.sqlbuilder.common.SqlBuilderLogger;
+import org.docheinstein.sqlbuilder.common.Pair;
+import org.docheinstein.sqlbuilder.common.SqlBuilderUtil;
 import com.docheinstein.sqlbuilder.expressions.Expression;
 import com.docheinstein.sqlbuilder.models.Column;
 import com.docheinstein.sqlbuilder.models.Table;
