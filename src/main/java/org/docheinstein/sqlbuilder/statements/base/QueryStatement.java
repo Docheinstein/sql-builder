@@ -1,7 +1,7 @@
 package org.docheinstein.sqlbuilder.statements.base;
 
-import org.docheinstein.sqlbuilder.common.SqlBuilderLogger;
-import org.docheinstein.sqlbuilder.common.SqlBuilderUtil;
+import org.docheinstein.sqlbuilder.commons.SqlBuilderLogger;
+import org.docheinstein.sqlbuilder.commons.SqlBuilderUtil;
 import org.docheinstein.sqlbuilder.models.Column;
 import org.docheinstein.sqlbuilder.models.Tuple;
 

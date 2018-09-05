@@ -1,6 +1,5 @@
 package org.docheinstein.sqlbuilder.models;
 
-import org.docheinstein.sqlbuilder.annotations.ColumnField;
 import org.docheinstein.sqlbuilder.statements.Select;
 import org.docheinstein.sqlbuilder.statements.Update;
 

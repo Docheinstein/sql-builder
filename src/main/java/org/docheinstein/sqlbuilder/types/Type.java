@@ -1,4 +1,4 @@
-package org.docheinstein.sqlbuilder.types.base;
+package org.docheinstein.sqlbuilder.types;
 
 import org.docheinstein.sqlbuilder.Sqlable;
 

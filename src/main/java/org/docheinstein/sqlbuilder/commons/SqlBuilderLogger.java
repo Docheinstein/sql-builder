@@ -1,4 +1,4 @@
-package org.docheinstein.sqlbuilder.common;
+package org.docheinstein.sqlbuilder.commons;
 
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;

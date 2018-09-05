@@ -1,7 +1,5 @@
 package org.docheinstein.sqlbuilder.types;
 
-import org.docheinstein.sqlbuilder.types.base.Type;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

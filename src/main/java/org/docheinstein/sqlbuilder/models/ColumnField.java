@@ -1,4 +1,4 @@
-package org.docheinstein.sqlbuilder.annotations;
+package org.docheinstein.sqlbuilder.models;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

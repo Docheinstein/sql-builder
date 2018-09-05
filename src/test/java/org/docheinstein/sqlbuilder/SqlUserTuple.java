@@ -1,6 +1,6 @@
-package org.docheinstein.sqlbuilder.example;
+package org.docheinstein.sqlbuilder;
 
-import org.docheinstein.sqlbuilder.annotations.ColumnField;
+import org.docheinstein.sqlbuilder.models.ColumnField;
 import org.docheinstein.sqlbuilder.models.Tuple;
 
 public class SqlUserTuple implements Tuple {

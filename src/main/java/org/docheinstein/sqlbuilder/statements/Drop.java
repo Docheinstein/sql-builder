@@ -1,6 +1,6 @@
 package org.docheinstein.sqlbuilder.statements;
 
-import org.docheinstein.sqlbuilder.common.SqlBuilderLogger;
+import org.docheinstein.sqlbuilder.commons.SqlBuilderLogger;
 import org.docheinstein.sqlbuilder.models.Table;
 import org.docheinstein.sqlbuilder.statements.base.UpdateStatement;
 

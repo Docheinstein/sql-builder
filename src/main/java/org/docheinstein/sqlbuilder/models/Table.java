@@ -3,7 +3,7 @@ package org.docheinstein.sqlbuilder.models;
 import org.docheinstein.sqlbuilder.clauses.ForeignKey;
 import org.docheinstein.sqlbuilder.expressions.Expression;
 import org.docheinstein.sqlbuilder.statements.*;
-import org.docheinstein.sqlbuilder.types.base.Type;
+import org.docheinstein.sqlbuilder.types.Type;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,9 +40,7 @@ public class Table {
         return this;
     }
 
-//    public Table foreignKey
-
-    public Table addForeignKey(ForeignKey fk) {
+    public Table foreignKey(ForeignKey fk) {
         mForeignKeys.add(fk);
         return this;
     }
@@ -50,11 +48,11 @@ public class Table {
     public <T> Table foreignKey(Column<T> internalCol, Column<T> externalCol,
                                ForeignKey.ReferenceOption onDelete,
                                ForeignKey.ReferenceOption onUpdate) {
-        return addForeignKey(new ForeignKey<>(internalCol, externalCol, onDelete, onUpdate));
+        return foreignKey(new ForeignKey<>(internalCol, externalCol, onDelete, onUpdate));
     }
 
     public <T> Table foreignKey(Column<T> internalCol, Column<T> externalCol) {
-        return addForeignKey(new ForeignKey<>(internalCol, externalCol, null, null));
+        return foreignKey(new ForeignKey<>(internalCol, externalCol, null, null));
     }
 
     public Table check(Expression e) {

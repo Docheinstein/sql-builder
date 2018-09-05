@@ -1,4 +1,4 @@
-package org.docheinstein.sqlbuilder.common;
+package org.docheinstein.sqlbuilder.commons;
 
 import org.docheinstein.sqlbuilder.SqlBindable;
 import org.docheinstein.sqlbuilder.Sqlable;
@@ -65,7 +65,7 @@ public class SqlBuilderUtil {
 
     public static PreparedStatement getCachedStatementOrCreate(
         Connection connection, String sql) throws SQLException {
-        return getCachedStatementOrCreate(connection, sql);
+        return getCachedStatementOrCreate(connection, sql, false);
     }
     public static PreparedStatement getCachedStatementOrCreate(
         Connection connection, String sql, boolean returnGeneratedKeys) throws SQLException {
