@@ -22,7 +22,10 @@ public class Int extends Type<Integer> {
     @Override
     public Integer getFromResultSet(ResultSet resultSet, String columnName)
         throws SQLException {
-        return resultSet.getInt(columnName);
+        // resultSet.getInt() returns 0 even if the value was null;
+        // instead we returns a null value if the result was null
+        int fromResultSet = resultSet.getInt(columnName);
+        return resultSet.wasNull() ? null : fromResultSet;
     }
 
 }

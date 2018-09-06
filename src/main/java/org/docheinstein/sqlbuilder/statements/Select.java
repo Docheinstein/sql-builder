@@ -111,8 +111,8 @@ public class Select extends QueryStatement {
 
     // Limit
 
-    public Select limit(Integer to) {
-        return limit(null, to);
+    public Select limit(Integer numrows) {
+        return limit(null, numrows);
     }
 
     public Select limit(Integer from, Integer numrows) {
