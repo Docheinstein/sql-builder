@@ -24,6 +24,7 @@ public class Select extends QueryStatement {
     private List<Column> mColumns = new ArrayList<>();
     private List<Column> mGroupBy = new ArrayList<>();
     private List<Join> mJoinColumns = new ArrayList<>();
+    private Pair<Integer, Integer> mLimit;
 
     private Table mTable;
 
@@ -108,6 +109,17 @@ public class Select extends QueryStatement {
         return this;
     }
 
+    // Limit
+
+    public Select limit(Integer to) {
+        return limit(null, to);
+    }
+
+    public Select limit(Integer from, Integer to) {
+        mLimit = new Pair<>(from, to);
+        return this;
+    }
+
 
     @Override
     public String toSql() {
@@ -154,6 +166,21 @@ public class Select extends QueryStatement {
                 o -> o.getKey().getTableDotName() + " " + o.getValue().toSql()));
         }
 
+        // LIMIT
+        if (mLimit != null) {
+            Integer from = mLimit.getKey();
+            Integer to = mLimit.getValue();
+
+            if (from != null || to != null) {
+                from = from != null ? from : 0;
+                to = to != null ? to : Integer.MAX_VALUE;
+
+                sql.append(" LIMIT ");
+                sql.append(from);
+                sql.append(", ");
+                sql.append(to);
+            }
+        }
 
         String sqlStr = sql.toString();
 

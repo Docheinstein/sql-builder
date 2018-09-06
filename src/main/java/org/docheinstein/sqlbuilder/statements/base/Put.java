@@ -77,6 +77,6 @@ public abstract class Put<T extends Put<T>> extends UpdateStatement {
         return getThis();
     }
 
-    // Needed for (inheritance + pattern) \ Warnings
+    // Needed for (inheritance + generics) \ Warnings
     public abstract T getThis();
 }
