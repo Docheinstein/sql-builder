@@ -115,8 +115,8 @@ public class Select extends QueryStatement {
         return limit(null, to);
     }
 
-    public Select limit(Integer from, Integer to) {
-        mLimit = new Pair<>(from, to);
+    public Select limit(Integer from, Integer numrows) {
+        mLimit = new Pair<>(from, numrows);
         return this;
     }
 
@@ -169,16 +169,16 @@ public class Select extends QueryStatement {
         // LIMIT
         if (mLimit != null) {
             Integer from = mLimit.getKey();
-            Integer to = mLimit.getValue();
+            Integer numrows = mLimit.getValue();
 
-            if (from != null || to != null) {
+            if (from != null || numrows != null) {
                 from = from != null ? from : 0;
-                to = to != null ? to : Integer.MAX_VALUE;
+                numrows = numrows != null ? numrows : Integer.MAX_VALUE;
 
                 sql.append(" LIMIT ");
                 sql.append(from);
                 sql.append(", ");
-                sql.append(to);
+                sql.append(numrows);
             }
         }
 
