@@ -5,6 +5,7 @@ import org.docheinstein.sqlbuilder.commons.SqlBuilderUtil;
 import org.docheinstein.sqlbuilder.commons.SqlLanguage;
 import org.docheinstein.sqlbuilder.models.Table;
 import org.docheinstein.sqlbuilder.statements.base.CreateTrigger;
+import org.docheinstein.sqlbuilder.statements.mysql.CreateTriggerMySQL;
 
 public class CreateTriggerPostgreSQL extends CreateTrigger {
 
@@ -67,6 +68,14 @@ public class CreateTriggerPostgreSQL extends CreateTrigger {
         mActionType = actionType;
 
         SqlBuilderUtil.ensureLanguage(SqlLanguage.PostgreSQL);
+    }
+
+    public ActionTime getActionTime() {
+        return mActionTime;
+    }
+
+    public ActionType getActionType() {
+        return mActionType;
     }
 
     @Override

@@ -60,6 +60,14 @@ public class CreateTriggerMySQL extends CreateTrigger {
         SqlBuilderUtil.ensureLanguage(SqlLanguage.MySQL);
     }
 
+    public ActionTime getActionTime() {
+        return mActionTime;
+    }
+
+    public ActionType getActionType() {
+        return mActionType;
+    }
+
     @Override
     public String toSql() {
         return String.format(

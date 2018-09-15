@@ -48,6 +48,14 @@ public class DropTriggerPostgreSQL extends DropTrigger {
         return option(DropOption.Cascade);
     }
 
+    public Table getTable() {
+        return mTable;
+    }
+
+    public DropOption getDropOption() {
+        return mDropOption;
+    }
+
     @Override
     public String toSql() {
         String sql = super.toSql() + " ON TABLE " + mTable.getName();

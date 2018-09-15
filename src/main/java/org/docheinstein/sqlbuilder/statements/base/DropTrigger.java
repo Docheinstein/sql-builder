@@ -18,6 +18,14 @@ public abstract class DropTrigger extends SingleShotStatement {
         return ifExists(true);
     }
 
+    public String getName() {
+        return mTriggerName;
+    }
+
+    public boolean getIfExists() {
+        return mIfExists;
+    }
+
     @Override
     public String toSql() {
         StringBuilder sql = new StringBuilder("DROP TRIGGER ");

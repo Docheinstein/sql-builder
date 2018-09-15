@@ -181,7 +181,7 @@ public class SqlMain {
                 CreateTriggerMySQL.ActionType.Insert,
                 "IF NEW.Datetime < CURDATE() THEN " +
                     " SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'your error text'; " +
-                    "END IF;"
+                "END IF;"
             ).toSql()
         );
     }

@@ -14,4 +14,15 @@ public abstract class CreateTrigger extends SingleShotStatement {
         mTable = table;
     }
 
+    public String getName() {
+        return mTriggerName;
+    }
+
+    public String getContent() {
+        return mTriggerContent;
+    }
+
+    public Table getTable() {
+        return mTable;
+    }
 }

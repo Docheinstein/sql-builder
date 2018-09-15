@@ -3,7 +3,6 @@ package org.docheinstein.sqlbuilder.models;
 import org.docheinstein.sqlbuilder.clauses.ForeignKey;
 import org.docheinstein.sqlbuilder.expressions.Expression;
 import org.docheinstein.sqlbuilder.statements.mysql.CreateTriggerMySQL;
-import org.docheinstein.sqlbuilder.statements.mysql.DropTriggerMySQL;
 import org.docheinstein.sqlbuilder.statements.postgresql.CreateTriggerPostgreSQL;
 import org.docheinstein.sqlbuilder.statements.postgresql.DropTriggerPostgreSQL;
 import org.docheinstein.sqlbuilder.statements.shared.*;
