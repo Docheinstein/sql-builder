@@ -44,12 +44,12 @@ public class SqlBuilderUtil {
 
     // ---------------------- SELECT -----------------------
 
-    public static int getCount(Table table, Connection connection) {
+    public static int getCount(Table table, Connection connection) throws SQLException {
         return getCount(table, null, connection);
     }
 
     public static int getCount(Table table, Expression whereExpression,
-                               Connection connection) {
+                               Connection connection) throws SQLException {
         if (table == null || connection == null)
             throw new InvalidParameterException("Table and connection must be not null");
 
@@ -58,57 +58,49 @@ public class SqlBuilderUtil {
         if (whereExpression != null)
             selectStatement = selectStatement.where(whereExpression);
 
-        try {
-            ResultSet rs = selectStatement.exec(connection);
-            if (rs.next())
-                return rs.getInt("count");
-            return 0;
-        } catch (SQLException e) {
-            throw new RuntimeException("SQL Exception: " + e.getMessage());
-        }
+        ResultSet rs = selectStatement.exec(connection);
+        if (rs.next())
+            return rs.getInt("count");
+        return 0;
     }
 
     public static <T extends Tuple> T fetchFirst(Select select, Class<T> tupleClass,
-                                               Connection connection) {
+                                               Connection connection)
+        throws SQLException {
         if (select == null || connection == null)
             throw new InvalidParameterException("Select and connection must be not null");
 
-        try {
-            List<T> ts = select
-                .fetch(
-                    connection,
-                    tupleClass
-                );
+        List<T> ts = select
+            .fetch(
+                connection,
+                tupleClass
+            );
 
-            if (ts.size() > 0)
-                return ts.get(0);
+        if (ts.size() > 0)
+            return ts.get(0);
 
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException("SQL Exception: " + e.getMessage());
-        }
+        return null;
+
     }
 
     public static <T extends Tuple> T fetchFirst(Select select, Class<T> tupleClass,
-                                                 Connection connection, int cacheIdentifier) {
+                                                 Connection connection, int cacheIdentifier)
+        throws SQLException {
         if (select == null || connection == null)
             throw new InvalidParameterException("Select and connection must be not null");
 
-        try {
-            List<T> ts = select
-                .fetchCache(
-                    connection,
-                    tupleClass,
-                    cacheIdentifier
-                );
 
-            if (ts.size() > 0)
-                return ts.get(0);
+        List<T> ts = select
+            .fetchCache(
+                connection,
+                tupleClass,
+                cacheIdentifier
+            );
 
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException("SQL Exception: " + e.getMessage());
-        }
+        if (ts.size() > 0)
+            return ts.get(0);
+
+        return null;
     }
 
 }
