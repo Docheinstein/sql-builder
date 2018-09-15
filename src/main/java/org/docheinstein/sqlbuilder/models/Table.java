@@ -2,7 +2,11 @@ package org.docheinstein.sqlbuilder.models;
 
 import org.docheinstein.sqlbuilder.clauses.ForeignKey;
 import org.docheinstein.sqlbuilder.expressions.Expression;
-import org.docheinstein.sqlbuilder.statements.*;
+import org.docheinstein.sqlbuilder.statements.mysql.CreateTriggerMySQL;
+import org.docheinstein.sqlbuilder.statements.mysql.DropTriggerMySQL;
+import org.docheinstein.sqlbuilder.statements.postgresql.CreateTriggerPostgreSQL;
+import org.docheinstein.sqlbuilder.statements.postgresql.DropTriggerPostgreSQL;
+import org.docheinstein.sqlbuilder.statements.shared.*;
 import org.docheinstein.sqlbuilder.types.Type;
 
 import java.util.ArrayList;
@@ -121,4 +125,36 @@ public class Table {
     }
 
     public Alter alter() { return Statements.alter(this); }
+
+    // ===========================
+    // === ADVANCED STATEMENTS ===
+    // ===========================
+
+    public CreateTriggerMySQL createTrigger(String triggerName,
+                                            CreateTriggerMySQL.ActionTime actionTime,
+                                            CreateTriggerMySQL.ActionType actionType,
+                                            String triggerContent) {
+        return Statements.createTrigger(
+            triggerName, actionTime, actionType,
+            this, triggerContent
+        );
+    }
+
+    public CreateTriggerPostgreSQL createTrigger(
+                                            String triggerName,
+                                            CreateTriggerPostgreSQL.ActionTime actionTime,
+                                            CreateTriggerPostgreSQL.ActionType actionType,
+                                            String triggerContent) {
+        return Statements.createTrigger(
+            triggerName, actionTime, actionType,
+            this, triggerContent
+        );
+    }
+
+    // DropTriggerMySQL is not present since the the statement doesn't require this table name
+
+    public DropTriggerPostgreSQL dropTrigger(String triggerName) {
+        return Statements.dropTrigger(triggerName, this);
+    }
+
 }

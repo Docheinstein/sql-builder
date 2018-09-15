@@ -1,4 +1,4 @@
-package org.docheinstein.sqlbuilder.statements;
+package org.docheinstein.sqlbuilder.statements.shared;
 
 import org.docheinstein.sqlbuilder.commons.SqlBuilderLogger;
 import org.docheinstein.sqlbuilder.commons.SqlBuilderUtil;

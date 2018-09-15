@@ -1,8 +1,11 @@
 package org.docheinstein.sqlbuilder;
 
+import org.docheinstein.sqlbuilder.commons.SqlBuilder;
+import org.docheinstein.sqlbuilder.commons.SqlLanguage;
 import org.docheinstein.sqlbuilder.models.Column;
 import org.docheinstein.sqlbuilder.clauses.ForeignKey;
 import org.docheinstein.sqlbuilder.models.Table;
+import org.docheinstein.sqlbuilder.statements.mysql.CreateTriggerMySQL;
 import org.docheinstein.sqlbuilder.types.Char;
 import org.docheinstein.sqlbuilder.types.Date;
 import org.docheinstein.sqlbuilder.types.Int;
@@ -162,10 +165,25 @@ public class SqlMain {
 
     public static void main(String args[]) {
        try {
-           mainInternal();
+           //mainInternal();
+           mainInternal2();
        } catch (Exception e ){
            e.printStackTrace();
        }
+    }
+
+    private static void mainInternal2() {
+        SqlBuilder.setLanguage(SqlLanguage.MySQL);
+        System.out.println(
+            new Table("PinSchedule").createTrigger(
+                "PinScheduleDateCheck",
+                CreateTriggerMySQL.ActionTime.Before,
+                CreateTriggerMySQL.ActionType.Insert,
+                "IF NEW.Datetime < CURDATE() THEN " +
+                    " SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'your error text'; " +
+                    "END IF;"
+            ).toSql()
+        );
     }
 
     private static void mainInternal() throws SQLException {

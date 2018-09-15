@@ -3,7 +3,7 @@ package org.docheinstein.sqlbuilder.models;
 import org.docheinstein.sqlbuilder.SqlBindable;
 import org.docheinstein.sqlbuilder.expressions.Operators;
 import org.docheinstein.sqlbuilder.expressions.Expression;
-import org.docheinstein.sqlbuilder.statements.Select;
+import org.docheinstein.sqlbuilder.statements.shared.Select;
 import org.docheinstein.sqlbuilder.types.Type;
 
 import java.util.ArrayList;

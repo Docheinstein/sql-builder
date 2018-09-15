@@ -1,9 +1,9 @@
-package org.docheinstein.sqlbuilder.statements;
+package org.docheinstein.sqlbuilder.statements.shared;
 
 import org.docheinstein.sqlbuilder.clauses.Join;
 import org.docheinstein.sqlbuilder.clauses.OrderBy;
 import org.docheinstein.sqlbuilder.commons.SqlBuilderLogger;
-import org.docheinstein.sqlbuilder.commons.Pair;
+import org.docheinstein.sqlbuilder.commons.adt.Pair;
 import org.docheinstein.sqlbuilder.commons.SqlBuilderUtil;
 import org.docheinstein.sqlbuilder.expressions.Expression;
 import org.docheinstein.sqlbuilder.expressions.Operators;

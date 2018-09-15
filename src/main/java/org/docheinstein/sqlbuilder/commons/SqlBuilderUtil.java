@@ -2,6 +2,7 @@ package org.docheinstein.sqlbuilder.commons;
 
 import org.docheinstein.sqlbuilder.SqlBindable;
 import org.docheinstein.sqlbuilder.Sqlable;
+import org.docheinstein.sqlbuilder.exceptions.UnsupportedSqlLanguage;
 import org.docheinstein.sqlbuilder.expressions.Expression;
 import org.docheinstein.sqlbuilder.models.Tuple;
 
@@ -160,4 +161,8 @@ public class SqlBuilderUtil {
         );
     }
 
+    public static void ensureLanguage(SqlLanguage sqlLanguage) {
+        if (sqlLanguage != SqlBuilder.getLanguage())
+            throw new UnsupportedSqlLanguage();
+    }
 }

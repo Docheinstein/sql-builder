@@ -59,11 +59,11 @@ public class ForeignKey<T> {
         return mExternalColumn;
     }
 
-    public ReferenceOption getOnDelete() {
+    public ReferenceOption getOnDeleteOption() {
         return mOnDelete;
     }
 
-    public ReferenceOption getOnUpdate() {
+    public ReferenceOption getOnUpdateOption() {
         return mOnUpdate;
     }
 }

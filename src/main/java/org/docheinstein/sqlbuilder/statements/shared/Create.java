@@ -1,4 +1,4 @@
-package org.docheinstein.sqlbuilder.statements;
+package org.docheinstein.sqlbuilder.statements.shared;
 
 import org.docheinstein.sqlbuilder.commons.SqlBuilderLogger;
 import org.docheinstein.sqlbuilder.commons.SqlBuilderUtil;
@@ -69,13 +69,13 @@ public class Create extends UpdateStatement {
             sql.append(fk.getExternalColumn().getName());
             sql.append(")");
 
-            ForeignKey.ReferenceOption deleteOption = fk.getOnDelete();
+            ForeignKey.ReferenceOption deleteOption = fk.getOnDeleteOption();
             if (deleteOption != null) {
                 sql.append(" ON DELETE ");
                 sql.append(deleteOption.toSql());
             }
 
-            ForeignKey.ReferenceOption updateOption = fk.getOnUpdate();
+            ForeignKey.ReferenceOption updateOption = fk.getOnUpdateOption();
             if (updateOption != null) {
                 sql.append(" ON UPDATE ");
                 sql.append(updateOption.toSql());

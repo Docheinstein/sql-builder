@@ -2,8 +2,7 @@ package org.docheinstein.sqlbuilder.expressions;
 
 
 import org.docheinstein.sqlbuilder.models.Column;
-import org.docheinstein.sqlbuilder.statements.Select;
-import org.docheinstein.sqlbuilder.statements.base.Statement;
+import org.docheinstein.sqlbuilder.statements.shared.Select;
 
 public class Operators {
     // ==================

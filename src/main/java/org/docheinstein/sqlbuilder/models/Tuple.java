@@ -1,7 +1,7 @@
 package org.docheinstein.sqlbuilder.models;
 
-import org.docheinstein.sqlbuilder.statements.Select;
-import org.docheinstein.sqlbuilder.statements.Update;
+import org.docheinstein.sqlbuilder.statements.shared.Select;
+import org.docheinstein.sqlbuilder.statements.shared.Update;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;

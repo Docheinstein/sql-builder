@@ -1,4 +1,4 @@
-package org.docheinstein.sqlbuilder.commons;
+package org.docheinstein.sqlbuilder.commons.adt;
 
 import java.io.Serializable;
 
