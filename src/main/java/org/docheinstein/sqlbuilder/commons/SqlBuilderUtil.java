@@ -83,8 +83,8 @@ public class SqlBuilderUtil {
 
     }
 
-    public static <T extends Tuple> T fetchFirst(Select select, Class<T> tupleClass,
-                                                 Connection connection, int cacheIdentifier)
+    public static <T extends Tuple> T fetchFirstCache(Select select, Class<T> tupleClass,
+                                                      Connection connection, int cacheIdentifier)
         throws SQLException {
         if (select == null || connection == null)
             throw new InvalidParameterException("Select and connection must be not null");
