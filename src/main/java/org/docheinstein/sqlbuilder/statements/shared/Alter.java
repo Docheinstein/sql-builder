@@ -1,7 +1,7 @@
 package org.docheinstein.sqlbuilder.statements.shared;
 
 import org.docheinstein.sqlbuilder.commons.SqlBuilderLogger;
-import org.docheinstein.sqlbuilder.commons.SqlBuilderUtil;
+import org.docheinstein.sqlbuilder.commons.SqlBuilderInternalUtil;
 import org.docheinstein.sqlbuilder.models.Column;
 import org.docheinstein.sqlbuilder.models.Table;
 import org.docheinstein.sqlbuilder.statements.base.UpdateStatement;
@@ -24,7 +24,7 @@ public class Alter extends UpdateStatement {
         sql.append(mTable.getName());
         sql.append(" ");
 
-        sql.append(SqlBuilderUtil.getAsCommaList(
+        sql.append(SqlBuilderInternalUtil.getAsCommaList(
             mAddColumns, c ->
                 "ADD COLUMN " + c.getColumnDefinition())
         );
@@ -32,7 +32,7 @@ public class Alter extends UpdateStatement {
         if (mAddColumns.size() > 0 && mDropColumns.size() > 0)
             sql.append(", ");
 
-        sql.append(SqlBuilderUtil.getAsCommaList(
+        sql.append(SqlBuilderInternalUtil.getAsCommaList(
             mDropColumns, c ->
                 "DROP COLUMN " + c.getColumnDefinition())
         );

@@ -1,7 +1,7 @@
 package org.docheinstein.sqlbuilder.statements.shared;
 
 import org.docheinstein.sqlbuilder.commons.SqlBuilderLogger;
-import org.docheinstein.sqlbuilder.commons.SqlBuilderUtil;
+import org.docheinstein.sqlbuilder.commons.SqlBuilderInternalUtil;
 import org.docheinstein.sqlbuilder.models.Table;
 import org.docheinstein.sqlbuilder.statements.base.Put;
 
@@ -39,11 +39,11 @@ public class Insert extends Put<Insert> {
         sql.append(" VALUES ");
 
         // VALUES
-        sql.append(SqlBuilderUtil.getAsCommaList(
+        sql.append(SqlBuilderInternalUtil.getAsCommaList(
             mValuesList,
             valueList ->
                 "(" +
-                    SqlBuilderUtil.getAsCommaList(
+                    SqlBuilderInternalUtil.getAsCommaList(
                         valueList,
                         value -> /* value == null ? "NULL" : */ "?") +
                     ")"

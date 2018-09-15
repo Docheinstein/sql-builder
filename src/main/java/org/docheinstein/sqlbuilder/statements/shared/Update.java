@@ -2,7 +2,7 @@ package org.docheinstein.sqlbuilder.statements.shared;
 
 import org.docheinstein.sqlbuilder.commons.SqlBuilderLogger;
 import org.docheinstein.sqlbuilder.commons.adt.Pair;
-import org.docheinstein.sqlbuilder.commons.SqlBuilderUtil;
+import org.docheinstein.sqlbuilder.commons.SqlBuilderInternalUtil;
 import org.docheinstein.sqlbuilder.expressions.Expression;
 import org.docheinstein.sqlbuilder.models.Column;
 import org.docheinstein.sqlbuilder.models.Table;
@@ -40,7 +40,7 @@ public class Update extends UpdateStatement {
         Map<String, Field> columnFieldMap;
 
         try {
-            columnFieldMap = SqlBuilderUtil.getCachedColumnFieldOrCreateAndCache(tuple.getClass());
+            columnFieldMap = SqlBuilderInternalUtil.getCachedColumnFieldOrCreateAndCache(tuple.getClass());
         } catch (IllegalAccessException | InstantiationException e) {
             throw new RuntimeException("Error while trying to access column field of class "
                 + tuple.getClass().getName());
@@ -98,14 +98,14 @@ public class Update extends UpdateStatement {
             sql.append(" SET ");
 
 
-            sql.append(SqlBuilderUtil.getAsCommaList(
+            sql.append(SqlBuilderInternalUtil.getAsCommaList(
                 mSetPairs, setPair ->
                     setPair.getKey() +
                         " = ?"));
         }
 
         // WHERE
-        sql.append(SqlBuilderUtil.getExpressionCondition(mWhere, "WHERE"));
+        sql.append(SqlBuilderInternalUtil.getExpressionCondition(mWhere, "WHERE"));
 
         String sqlStr = sql.toString();
 

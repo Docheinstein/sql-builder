@@ -1,6 +1,6 @@
 package org.docheinstein.sqlbuilder.statements.base;
 
-import org.docheinstein.sqlbuilder.commons.SqlBuilderUtil;
+import org.docheinstein.sqlbuilder.commons.SqlBuilderInternalUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,8 +17,8 @@ public abstract class UpdateStatement implements Statement {
             return 0;
 
         return execInternal(
-            SqlBuilderUtil.getBoundStatement(
-                SqlBuilderUtil.getCachedStatementOrCreate(
+            SqlBuilderInternalUtil.getBoundStatement(
+                SqlBuilderInternalUtil.getCachedStatementOrCreate(
                     connection, toSql(), returnLastInsertedId), getBindableObjects()
             ), returnLastInsertedId
         );
@@ -33,7 +33,7 @@ public abstract class UpdateStatement implements Statement {
             return 0;
 
         return execInternal(
-            SqlBuilderUtil.getBoundCachedStatementOrCreateOrRegenerate(
+            SqlBuilderInternalUtil.getBoundCachedStatementOrCreateOrRegenerate(
                     connection, this, identifier, returnLastInsertedId
             ), returnLastInsertedId);
     }

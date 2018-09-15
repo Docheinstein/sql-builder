@@ -1,6 +1,6 @@
 package org.docheinstein.sqlbuilder.types;
 
-import org.docheinstein.sqlbuilder.commons.SqlBuilderUtil;
+import org.docheinstein.sqlbuilder.commons.SqlBuilderInternalUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +22,7 @@ public class Enum extends Type<String> {
     public String toSql() {
         return
             "ENUM (" +
-            SqlBuilderUtil.getAsCommaList(Arrays.asList(mValues), s -> "'" + s + "'")
+            SqlBuilderInternalUtil.getAsCommaList(Arrays.asList(mValues), s -> "'" + s + "'")
             + ")";
     }
 }

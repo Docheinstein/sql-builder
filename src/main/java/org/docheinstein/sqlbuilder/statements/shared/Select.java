@@ -4,7 +4,7 @@ import org.docheinstein.sqlbuilder.clauses.Join;
 import org.docheinstein.sqlbuilder.clauses.OrderBy;
 import org.docheinstein.sqlbuilder.commons.SqlBuilderLogger;
 import org.docheinstein.sqlbuilder.commons.adt.Pair;
-import org.docheinstein.sqlbuilder.commons.SqlBuilderUtil;
+import org.docheinstein.sqlbuilder.commons.SqlBuilderInternalUtil;
 import org.docheinstein.sqlbuilder.expressions.Expression;
 import org.docheinstein.sqlbuilder.expressions.Operators;
 import org.docheinstein.sqlbuilder.models.*;
@@ -125,7 +125,7 @@ public class Select extends QueryStatement {
     public String toSql() {
         // return toSql(true);
         StringBuilder sql = new StringBuilder("SELECT ");
-        sql.append(SqlBuilderUtil.getAsCommaList(
+        sql.append(SqlBuilderInternalUtil.getAsCommaList(
             mColumns,
             Column::getTableDotName
         ));
@@ -144,24 +144,24 @@ public class Select extends QueryStatement {
         });
 
         // WHERE
-        sql.append(SqlBuilderUtil.getExpressionCondition(mWhere, "WHERE"));
+        sql.append(SqlBuilderInternalUtil.getExpressionCondition(mWhere, "WHERE"));
 
         // GROUP BY
         if (mGroupBy.size() > 0) {
             sql.append(" GROUP BY ");
 
-            sql.append(SqlBuilderUtil.getAsCommaList(
+            sql.append(SqlBuilderInternalUtil.getAsCommaList(
                 mGroupBy,
                 Column::getTableDotName));
         }
         
-        sql.append(SqlBuilderUtil.getExpressionCondition(mHaving, "HAVING"));
+        sql.append(SqlBuilderInternalUtil.getExpressionCondition(mHaving, "HAVING"));
         
         // ORDER BY
         if (mOrderBy.size() > 0) {
             sql.append(" ORDER BY ");
 
-            sql.append(SqlBuilderUtil.getAsCommaList(
+            sql.append(SqlBuilderInternalUtil.getAsCommaList(
                 mOrderBy,
                 o -> o.getKey().getTableDotName() + " " + o.getValue().toSql()));
         }

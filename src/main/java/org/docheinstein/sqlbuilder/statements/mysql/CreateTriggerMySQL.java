@@ -1,7 +1,7 @@
 package org.docheinstein.sqlbuilder.statements.mysql;
 
 import org.docheinstein.sqlbuilder.Sqlable;
-import org.docheinstein.sqlbuilder.commons.SqlBuilderUtil;
+import org.docheinstein.sqlbuilder.commons.SqlBuilderInternalUtil;
 import org.docheinstein.sqlbuilder.commons.SqlLanguage;
 import org.docheinstein.sqlbuilder.models.Table;
 import org.docheinstein.sqlbuilder.statements.base.CreateTrigger;
@@ -57,7 +57,7 @@ public class CreateTriggerMySQL extends CreateTrigger {
         mActionTime = actionTime;
         mActionType = actionType;
 
-        SqlBuilderUtil.ensureLanguage(SqlLanguage.MySQL);
+        SqlBuilderInternalUtil.ensureLanguage(SqlLanguage.MySQL);
     }
 
     public ActionTime getActionTime() {

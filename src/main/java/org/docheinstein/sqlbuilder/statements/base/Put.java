@@ -1,6 +1,6 @@
 package org.docheinstein.sqlbuilder.statements.base;
 
-import org.docheinstein.sqlbuilder.commons.SqlBuilderUtil;
+import org.docheinstein.sqlbuilder.commons.SqlBuilderInternalUtil;
 import org.docheinstein.sqlbuilder.models.Column;
 import org.docheinstein.sqlbuilder.models.Table;
 import org.docheinstein.sqlbuilder.models.Tuple;
@@ -39,7 +39,7 @@ public abstract class Put<T extends Put<T>> extends UpdateStatement {
         Map<String, Field> columnFieldMap;
 
         try {
-            columnFieldMap = SqlBuilderUtil.getCachedColumnFieldOrCreateAndCache(tuples[0].getClass());
+            columnFieldMap = SqlBuilderInternalUtil.getCachedColumnFieldOrCreateAndCache(tuples[0].getClass());
         } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
             throw new RuntimeException("Error while trying to access column field of class "

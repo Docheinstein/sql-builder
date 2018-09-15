@@ -1,7 +1,7 @@
 package org.docheinstein.sqlbuilder.statements.shared;
 
 import org.docheinstein.sqlbuilder.commons.SqlBuilderLogger;
-import org.docheinstein.sqlbuilder.commons.SqlBuilderUtil;
+import org.docheinstein.sqlbuilder.commons.SqlBuilderInternalUtil;
 import org.docheinstein.sqlbuilder.expressions.Expression;
 import org.docheinstein.sqlbuilder.models.Table;
 import org.docheinstein.sqlbuilder.statements.base.UpdateStatement;
@@ -32,7 +32,7 @@ public class Delete extends UpdateStatement {
         sql.append(mTable.getName());
 
         // WHERE
-        sql.append(SqlBuilderUtil.getExpressionCondition(mWhere, "WHERE"));
+        sql.append(SqlBuilderInternalUtil.getExpressionCondition(mWhere, "WHERE"));
 
         String sqlStr = sql.toString();
 

@@ -1,7 +1,7 @@
 package org.docheinstein.sqlbuilder.statements.postgresql;
 
 import org.docheinstein.sqlbuilder.Sqlable;
-import org.docheinstein.sqlbuilder.commons.SqlBuilderUtil;
+import org.docheinstein.sqlbuilder.commons.SqlBuilderInternalUtil;
 import org.docheinstein.sqlbuilder.commons.SqlLanguage;
 import org.docheinstein.sqlbuilder.models.Table;
 import org.docheinstein.sqlbuilder.statements.base.DropTrigger;
@@ -32,7 +32,7 @@ public class DropTriggerPostgreSQL extends DropTrigger {
         super(triggerName);
         mTable = table;
 
-        SqlBuilderUtil.ensureLanguage(SqlLanguage.PostgreSQL);
+        SqlBuilderInternalUtil.ensureLanguage(SqlLanguage.PostgreSQL);
     }
 
     public DropTriggerPostgreSQL option(DropOption dropOption) {

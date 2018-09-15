@@ -1,7 +1,7 @@
 package org.docheinstein.sqlbuilder.statements.base;
 
 import org.docheinstein.sqlbuilder.commons.SqlBuilderLogger;
-import org.docheinstein.sqlbuilder.commons.SqlBuilderUtil;
+import org.docheinstein.sqlbuilder.commons.SqlBuilderInternalUtil;
 import org.docheinstein.sqlbuilder.models.Column;
 import org.docheinstein.sqlbuilder.models.Tuple;
 
@@ -18,8 +18,8 @@ public abstract class QueryStatement implements Statement {
         if (connection == null)
             return null;
 
-        return SqlBuilderUtil.getBoundStatement(
-            SqlBuilderUtil.getCachedStatementOrCreate(
+        return SqlBuilderInternalUtil.getBoundStatement(
+            SqlBuilderInternalUtil.getCachedStatementOrCreate(
                 connection, toSql()), getBindableObjects()
         ).executeQuery();
     }
@@ -28,7 +28,7 @@ public abstract class QueryStatement implements Statement {
         if (connection == null)
             return null;
 
-        return SqlBuilderUtil.execQueryCachedStatementOrCreateOrRegenerate(
+        return SqlBuilderInternalUtil.execQueryCachedStatementOrCreateOrRegenerate(
             connection, this, identifier);
     }
 
@@ -69,7 +69,7 @@ public abstract class QueryStatement implements Statement {
         ResultSet resultSet) throws SQLException {
 
         try {
-            Map<String, Field> columnFieldMap = SqlBuilderUtil.getCachedColumnFieldOrCreateAndCache(clazz);
+            Map<String, Field> columnFieldMap = SqlBuilderInternalUtil.getCachedColumnFieldOrCreateAndCache(clazz);
 
             while (resultSet.next()) {
                 T t = clazz.newInstance();

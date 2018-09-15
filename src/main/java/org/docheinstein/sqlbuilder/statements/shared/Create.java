@@ -1,7 +1,7 @@
 package org.docheinstein.sqlbuilder.statements.shared;
 
 import org.docheinstein.sqlbuilder.commons.SqlBuilderLogger;
-import org.docheinstein.sqlbuilder.commons.SqlBuilderUtil;
+import org.docheinstein.sqlbuilder.commons.SqlBuilderInternalUtil;
 import org.docheinstein.sqlbuilder.expressions.Expression;
 import org.docheinstein.sqlbuilder.clauses.ForeignKey;
 import org.docheinstein.sqlbuilder.models.Column;
@@ -46,7 +46,7 @@ public class Create extends UpdateStatement {
         sql.append(" (");
 
         // Columns
-        sql.append(SqlBuilderUtil.getAsCommaList(
+        sql.append(SqlBuilderInternalUtil.getAsCommaList(
             mTable.getColumns(), Column::getColumnDefinition)
         );
 
@@ -54,7 +54,7 @@ public class Create extends UpdateStatement {
 
         if (primaryKeyCols.size() > 0) {
             sql.append(", PRIMARY KEY (");
-            sql.append(SqlBuilderUtil.getAsStringList(primaryKeyCols));
+            sql.append(SqlBuilderInternalUtil.getAsStringList(primaryKeyCols));
             sql.append(")");
         }
 
