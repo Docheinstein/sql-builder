@@ -2,6 +2,7 @@ package org.docheinstein.sqlbuilder.statements.postgresql;
 
 import org.docheinstein.sqlbuilder.Sqlable;
 import org.docheinstein.sqlbuilder.commons.SqlBuilderInternalUtil;
+import org.docheinstein.sqlbuilder.commons.SqlBuilderLogger;
 import org.docheinstein.sqlbuilder.commons.SqlLanguage;
 import org.docheinstein.sqlbuilder.models.Table;
 import org.docheinstein.sqlbuilder.statements.base.DropTrigger;
@@ -58,9 +59,15 @@ public class DropTriggerPostgreSQL extends DropTrigger {
 
     @Override
     public String toSql() {
-        String sql = super.toSql() + " ON TABLE " + mTable.getName();
+        String sqlStr = super.toSql() + " ON TABLE " + mTable.getName();
+
         if (mDropOption != null)
-            sql += " " + mDropOption.toSql();
-        return sql;
+            sqlStr += " " + mDropOption.toSql();
+
+        SqlBuilderLogger.out("Created [DROP TRIGGER] SQL {" + sqlStr + "}");
+
+        return sqlStr;
+
+
     }
 }

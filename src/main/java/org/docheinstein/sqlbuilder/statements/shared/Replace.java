@@ -37,7 +37,7 @@ public class Replace extends Put<Replace> {
 
         String sqlStr = sql.toString();
 
-        SqlBuilderLogger.out("Created SQL: " + sqlStr);
+        SqlBuilderLogger.out("Created [REPLACE] SQL {" + sqlStr + "}");
 
         return sqlStr;
     }

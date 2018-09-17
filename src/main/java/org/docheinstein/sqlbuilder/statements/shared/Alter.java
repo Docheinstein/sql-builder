@@ -38,7 +38,9 @@ public class Alter extends UpdateStatement {
         );
 
         String sqlStr = sql.toString();
-        SqlBuilderLogger.out("Created SQL: " + sqlStr);
+
+        SqlBuilderLogger.out("Created [ALTER] SQL {" + sqlStr + "}");
+
         return sqlStr;
     }
 

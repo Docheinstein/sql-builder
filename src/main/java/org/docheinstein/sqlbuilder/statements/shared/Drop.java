@@ -19,7 +19,9 @@ public class Drop extends UpdateStatement {
         sql.append(mTable.getName());
 
         String sqlStr = sql.toString();
-        SqlBuilderLogger.out("Created SQL: " + sqlStr);
+
+        SqlBuilderLogger.out("Created [DROP TABLE] SQL {" + sqlStr + "}");
+
         return sqlStr;
     }
 

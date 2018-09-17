@@ -96,7 +96,7 @@ public class Create extends UpdateStatement {
 
         String sqlStr = sql.toString();
 
-        SqlBuilderLogger.out("Created SQL: " + sqlStr);
+        SqlBuilderLogger.out("Created [CREATE TABLE] SQL {" + sqlStr + "}");
 
         return sqlStr;
     }

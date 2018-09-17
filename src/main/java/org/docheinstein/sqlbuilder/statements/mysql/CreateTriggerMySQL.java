@@ -2,6 +2,7 @@ package org.docheinstein.sqlbuilder.statements.mysql;
 
 import org.docheinstein.sqlbuilder.Sqlable;
 import org.docheinstein.sqlbuilder.commons.SqlBuilderInternalUtil;
+import org.docheinstein.sqlbuilder.commons.SqlBuilderLogger;
 import org.docheinstein.sqlbuilder.commons.SqlLanguage;
 import org.docheinstein.sqlbuilder.models.Table;
 import org.docheinstein.sqlbuilder.statements.base.CreateTrigger;
@@ -70,7 +71,7 @@ public class CreateTriggerMySQL extends CreateTrigger {
 
     @Override
     public String toSql() {
-        return String.format(
+        String sqlStr =  String.format(
             "CREATE TRIGGER %s %s %s ON %s FOR EACH ROW BEGIN %s END;",
             mTriggerName,
             mActionTime.toSql(),
@@ -78,5 +79,9 @@ public class CreateTriggerMySQL extends CreateTrigger {
             mTable.getName(),
             mTriggerContent
         );
+
+        SqlBuilderLogger.out("Created [CREATE TRIGGER] SQL {" + sqlStr + "}");
+
+        return sqlStr;
     }
 }

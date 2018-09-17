@@ -184,7 +184,7 @@ public class Select extends QueryStatement {
 
         String sqlStr = sql.toString();
 
-        SqlBuilderLogger.out("Created SQL: " + sqlStr);
+        SqlBuilderLogger.out("Created SELECT SQL {" + sqlStr + "}");
 
         return sqlStr;
     }

@@ -51,7 +51,7 @@ public class Insert extends Put<Insert> {
 
         String sqlStr = sql.toString();
 
-        SqlBuilderLogger.out("Created SQL: " + sqlStr);
+        SqlBuilderLogger.out("Created [INSERT] SQL {" + sqlStr + "}");
 
         return sqlStr;
     }

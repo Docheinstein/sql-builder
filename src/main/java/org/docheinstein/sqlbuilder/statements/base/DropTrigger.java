@@ -1,5 +1,7 @@
 package org.docheinstein.sqlbuilder.statements.base;
 
+import org.docheinstein.sqlbuilder.commons.SqlBuilderLogger;
+
 public abstract class DropTrigger extends SingleShotStatement {
 
     protected final String mTriggerName;
@@ -28,10 +30,17 @@ public abstract class DropTrigger extends SingleShotStatement {
 
     @Override
     public String toSql() {
+        String sqlStr;
+
         StringBuilder sql = new StringBuilder("DROP TRIGGER ");
         if (mIfExists)
             sql.append(" IF EXISTS ");
         sql.append(mTriggerName);
-        return sql.toString();
+
+        sqlStr = sql.toString();
+
+        SqlBuilderLogger.out("Created [DROP TRIGGER] SQL {" + sqlStr + "}");
+
+        return sqlStr;
     }
 }

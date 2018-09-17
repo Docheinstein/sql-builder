@@ -109,7 +109,7 @@ public class Update extends UpdateStatement {
 
         String sqlStr = sql.toString();
 
-        SqlBuilderLogger.out("Created SQL: " + sqlStr);
+        SqlBuilderLogger.out("Created [UPDATE] SQL {" + sqlStr + "}");
 
         return sqlStr;
     }

@@ -36,8 +36,7 @@ public class Delete extends UpdateStatement {
 
         String sqlStr = sql.toString();
 
-        SqlBuilderLogger.out("Created SQL: " + sqlStr);
-
+        SqlBuilderLogger.out("Created [DELETE TABLE] SQL {" + sqlStr + "}");
         return sqlStr;
     }
 
