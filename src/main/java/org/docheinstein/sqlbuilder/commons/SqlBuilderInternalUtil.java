@@ -89,14 +89,14 @@ public class SqlBuilderInternalUtil {
         PreparedStatement statement = SqlBuilderCache.Statements.get(sql);
 
         if (statement == null) {
-            SqlBuilderLogger.out("First creation of statement from sql: " + sql);
+            SqlBuilderLogger.out("First creation of statement for SQL {" + sql + "}");
             if (returnGeneratedKeys)
                 statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             else
                 statement = connection.prepareStatement(sql);
             SqlBuilderCache.Statements.put(sql, statement);
         } else {
-            SqlBuilderLogger.out("Reusing cached statement for sql: " + sql);
+            SqlBuilderLogger.out("Reusing cached statement for SQL {" + sql + "}");
         }
 
         return statement;
@@ -110,17 +110,18 @@ public class SqlBuilderInternalUtil {
         if (statement == null || statement.isClosed()) {
             String sql = sqlable.toSql();
             if (statement == null)
-                SqlBuilderLogger.out("First creation of statement from sql: " + sql + " | ID = " + identifier);
+                SqlBuilderLogger.out("[ID = " + identifier + "] First creation " +
+                    "of statement for SQL {" + sql + "}");
             else
-                SqlBuilderLogger.out("Recreating statement since cached one is closed for sql: "
-                    + sql + " | ID = " + identifier);
+                SqlBuilderLogger.out("[ID = " + identifier + "] Recreating " +
+                    "statement since cached one is closed for SQL {" + sql + "}");
             if (returnGeneratedKeys)
                 statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             else
                 statement = connection.prepareStatement(sql);
             SqlBuilderCache.Statements.put(identifier, statement);
         } else {
-            SqlBuilderLogger.out("Reusing cached statement for sql with ID = " + identifier);
+            SqlBuilderLogger.out("[ID = " + identifier + "] Reusing cached statement for SQL statement");
         }
 
         return statement;

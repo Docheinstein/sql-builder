@@ -8,6 +8,7 @@ import org.docheinstein.sqlbuilder.models.Column;
 import org.docheinstein.sqlbuilder.models.Table;
 import org.docheinstein.sqlbuilder.statements.base.UpdateStatement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -102,6 +103,6 @@ public class Create extends UpdateStatement {
 
     @Override
     public List<Object> getBindableObjects() {
-        return null;
+        return mTable.getCheck() == null ? null : mTable.getCheck().getBindableObjects();
     }
 }
