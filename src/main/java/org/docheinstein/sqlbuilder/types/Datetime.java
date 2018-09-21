@@ -4,6 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 
+/**
+ * SQL type that wraps a datetime (actually a {@link String});
+ * translated into DATETIME.
+ */
 public class Datetime extends Type<String> {
 
     @Override

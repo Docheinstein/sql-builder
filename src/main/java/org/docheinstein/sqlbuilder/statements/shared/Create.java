@@ -8,30 +8,55 @@ import org.docheinstein.sqlbuilder.models.Column;
 import org.docheinstein.sqlbuilder.models.Table;
 import org.docheinstein.sqlbuilder.statements.base.UpdateStatement;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /*
-CREATE TABLE IF NOT EXISTS User (
-    Username varchar(64) PRIMARY KEY,
-    Password varchar(128),
-    Capabilities int
-);
-*/
+ * CREATE TABLE IF NOT EXISTS User (
+ *   Username varchar(32) PRIMARY KEY,
+ *   Password varchar(32),
+ *   Capabilities int
+ * );
+ */
 
-public class Create extends UpdateStatement {
+/**
+ * Represents a CREATE TABLE statement.
+ *
+ * <p>
+ *
+ * This statement implementation differs from other statement's implementation since this
+ * statement essentially requires a {@link Table} object instead of provide
+ * methods for inline building of the statement.
+ */
+public class Create implements UpdateStatement {
+
+    /** Table to create. */
     private Table mTable;
+
+    /** Whether use the IF NOT EXISTS clause. */
     private boolean mIfNotExists;
 
+    /**
+     * Creates a CREATE TABLE statement for the given table.
+     * @param table the table to create
+     */
     public Create(Table table) {
         mTable = table;
     }
 
+    /**
+     * Sets/unsets the IF NOT EXISTS clause.
+     * @param ifNotExists whether set the IF NOT EXISTS clause
+     * @return this statement
+     */
     public Create ifNotExists(boolean ifNotExists) {
         mIfNotExists = ifNotExists;
         return this;
     }
 
+    /**
+     * Sets the IF NOT EXISTS clause.
+     * @return this statement
+     */
     public Create ifNotExists() {
         return ifNotExists(true);
     }
@@ -70,13 +95,13 @@ public class Create extends UpdateStatement {
             sql.append(fk.getExternalColumn().getName());
             sql.append(")");
 
-            ForeignKey.ReferenceOption deleteOption = fk.getOnDeleteOption();
+            ForeignKey.ReferenceAction deleteOption = fk.getOnDeleteOption();
             if (deleteOption != null) {
                 sql.append(" ON DELETE ");
                 sql.append(deleteOption.toSql());
             }
 
-            ForeignKey.ReferenceOption updateOption = fk.getOnUpdateOption();
+            ForeignKey.ReferenceAction updateOption = fk.getOnUpdateOption();
             if (updateOption != null) {
                 sql.append(" ON UPDATE ");
                 sql.append(updateOption.toSql());

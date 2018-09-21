@@ -4,6 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 
+/**
+ * SQL type that wraps a timestamp (actually a {@link String});
+ * translated into TIMESTAMP.
+ */
 public class Timestamp extends Type<String> {
 
     @Override

@@ -6,9 +6,22 @@ import org.docheinstein.sqlbuilder.statements.base.UpdateStatement;
 
 import java.util.List;
 
-public class Drop extends UpdateStatement {
+/*
+ * DROP TABLE User;
+ */
+
+/**
+ * Represents a DROP TABLE statement.
+ */
+public class Drop implements UpdateStatement {
+
+    /** Table to drop. */
     private Table mTable;
 
+    /**
+     * Creates a DROP TABLE statement for the given table.
+     * @param table the table
+     */
     public Drop(Table table) {
         mTable = table;
     }
@@ -27,6 +40,6 @@ public class Drop extends UpdateStatement {
 
     @Override
     public List<Object> getBindableObjects() {
-        return null;
+        return null; // No parameters to bind
     }
 }

@@ -139,7 +139,7 @@ public class SqlMain {
             col(CNOME);
             col(CD);
             primaryKey(CC);
-            foreignKey(CD, D.CD, ForeignKey.ReferenceOption.Cascade, null);
+            foreignKey(CD, D.CD, ForeignKey.ReferenceAction.Cascade, null);
         }
     }
 
@@ -157,8 +157,8 @@ public class SqlMain {
             col(DATA);
             col(VOTO);
             primaryKey(MATR, CC);
-            foreignKey(MATR, S.MATR, ForeignKey.ReferenceOption.Cascade, null);
-            foreignKey(CC, C.CC, ForeignKey.ReferenceOption.Cascade, null);
+            foreignKey(MATR, S.MATR, ForeignKey.ReferenceAction.Cascade, null);
+            foreignKey(CC, C.CC, ForeignKey.ReferenceAction.Cascade, null);
             check(VOTO.ge(18).and(VOTO.le(30)).or(VOTO.eq(33)));
         }
     }

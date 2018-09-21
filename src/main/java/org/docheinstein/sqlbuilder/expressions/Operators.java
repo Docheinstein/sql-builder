@@ -1,13 +1,23 @@
 package org.docheinstein.sqlbuilder.expressions;
 
 
+import org.docheinstein.sqlbuilder.commons.SqlBuilderInternalUtil;
+import org.docheinstein.sqlbuilder.commons.SqlLanguage;
 import org.docheinstein.sqlbuilder.models.Column;
+import org.docheinstein.sqlbuilder.statements.base.QueryStatement;
 import org.docheinstein.sqlbuilder.statements.shared.Select;
 
+import java.security.InvalidParameterException;
+import java.util.List;
+
+/**
+ * Contains methods for create (almost?) all the SQL expressions ({@link Expression}).
+ */
 public class Operators {
-    // ==================
-    // === ARITHMETIC ===
-    // ==================
+
+    // -------------------------------------------------------------------------
+    // ---------------------------- ARITHMETIC ---------------------------------
+    // -------------------------------------------------------------------------
 
     // +
 
@@ -94,9 +104,9 @@ public class Operators {
         }
     }
 
-    // ==================
-    // === COMPARISON ===
-    // ==================
+    // -------------------------------------------------------------------------
+    // ---------------------------- COMPARISON ---------------------------------
+    // -------------------------------------------------------------------------
 
     // =
 
@@ -200,65 +210,9 @@ public class Operators {
         }
     }
 
-
-    // ==================
-    // ==== BITWISE =====
-    // ==================
-
-    // &
-
-    public static class BitAnd extends Expression {
-        public BitAnd(Expression e1, Expression e2) { super(e1, e2); }
-        public BitAnd(Expression e, Column c) { super(e, c); }
-        public BitAnd(Expression e, Object v) { super(e, v); }
-        public <T> BitAnd(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> BitAnd(Column<T> c, Expression e) { super(c, e); }
-        public <T> BitAnd(Column<T> c, T v) { super(c, v); }
-        public <T> BitAnd(T v1, T v2) { super(v1, v2); }
-
-        @Override
-        protected String getOperatorKeyword() {
-            return "&";
-        }
-    }
-
-    // |
-
-    public static class BitOr extends Expression {
-        public BitOr(Expression e1, Expression e2) { super(e1, e2); }
-        public BitOr(Expression e, Column c) { super(e, c); }
-        public BitOr(Expression e, Object v) { super(e, v); }
-        public <T> BitOr(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> BitOr(Column<T> c, Expression e) { super(c, e); }
-        public <T> BitOr(Column<T> c, T v) { super(c, v); }
-        public <T> BitOr(T v1, T v2) { super(v1, v2); }
-
-        @Override
-        protected String getOperatorKeyword() {
-            return "|";
-        }
-    }
-
-    // ^
-
-    public static class BitXor extends Expression {
-        public BitXor(Expression e1, Expression e2) { super(e1, e2); }
-        public BitXor(Expression e, Column c) { super(e, c); }
-        public BitXor(Expression e, Object v) { super(e, v); }
-        public <T> BitXor(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> BitXor(Column<T> c, Expression e) { super(c, e); }
-        public <T> BitXor(Column<T> c, T v) { super(c, v); }
-        public <T> BitXor(T v1, T v2) { super(v1, v2); }
-
-        @Override
-        protected String getOperatorKeyword() {
-            return "^";
-        }
-    }
-
-    // ==================
-    // ==== LOGICAL =====
-    // ==================
+    // -------------------------------------------------------------------------
+    // ----------------------------- LOGICAL -----------------------------------
+    // -------------------------------------------------------------------------
 
     // AND
 
@@ -435,11 +389,64 @@ public class Operators {
         }
     }
 
+    // -------------------------------------------------------------------------
+    // ----------------------------- BITWISE -----------------------------------
+    // -------------------------------------------------------------------------
 
-    // ============================
-    // === SUB QUERY OPERATORS ====
-    // ============================
+    // &
 
+    public static class BitAnd extends Expression {
+        public BitAnd(Expression e1, Expression e2) { super(e1, e2); }
+        public BitAnd(Expression e, Column c) { super(e, c); }
+        public BitAnd(Expression e, Object v) { super(e, v); }
+        public <T> BitAnd(Column<T> c1, Column<T> c2) { super(c1, c2); }
+        public <T> BitAnd(Column<T> c, Expression e) { super(c, e); }
+        public <T> BitAnd(Column<T> c, T v) { super(c, v); }
+        public <T> BitAnd(T v1, T v2) { super(v1, v2); }
+
+        @Override
+        protected String getOperatorKeyword() {
+            return "&";
+        }
+    }
+
+    // |
+
+    public static class BitOr extends Expression {
+        public BitOr(Expression e1, Expression e2) { super(e1, e2); }
+        public BitOr(Expression e, Column c) { super(e, c); }
+        public BitOr(Expression e, Object v) { super(e, v); }
+        public <T> BitOr(Column<T> c1, Column<T> c2) { super(c1, c2); }
+        public <T> BitOr(Column<T> c, Expression e) { super(c, e); }
+        public <T> BitOr(Column<T> c, T v) { super(c, v); }
+        public <T> BitOr(T v1, T v2) { super(v1, v2); }
+
+        @Override
+        protected String getOperatorKeyword() {
+            return "|";
+        }
+    }
+
+    // ^
+
+    public static class BitXor extends Expression {
+        public BitXor(Expression e1, Expression e2) { super(e1, e2); }
+        public BitXor(Expression e, Column c) { super(e, c); }
+        public BitXor(Expression e, Object v) { super(e, v); }
+        public <T> BitXor(Column<T> c1, Column<T> c2) { super(c1, c2); }
+        public <T> BitXor(Column<T> c, Expression e) { super(c, e); }
+        public <T> BitXor(Column<T> c, T v) { super(c, v); }
+        public <T> BitXor(T v1, T v2) { super(v1, v2); }
+
+        @Override
+        protected String getOperatorKeyword() {
+            return "^";
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // --------------------------- SUB QUERY -----------------------------------
+    // -------------------------------------------------------------------------
 
     // IN
 
@@ -516,21 +523,35 @@ public class Operators {
         }
     }
 
-    // ==================
-    // ===== BINARY =====
-    // ==================
+    // -------------------------------------------------------------------------
+    // ----------------------------- BINARY ------------------------------------
+    // -------------------------------------------------------------------------
 
-    public static class Except extends Expression {
-        public Except(Select s1, Select s2) { super(s1, s2, false, true, true); }
+    public static abstract class BinaryQueryStatement
+        extends Expression implements QueryStatement {
+        private final List<Column> mColumns;
+
+        public BinaryQueryStatement(Select s1, Select s2) {
+            super(s1, s2, false, true, true);
+
+            if (s1.getColumns().size() != s2.getColumns().size())
+                throw new InvalidParameterException(
+                    "The binary query's semantic requires the SELECT statements to have the same column size");
+
+            // The columns from the first select must be chosen so that for
+            // the outer binary query the provided columns will actually be
+            // the ones on which the query statement should work on
+            mColumns = s1.getColumns();
+        }
 
         @Override
-        protected String getOperatorKeyword() {
-            return "EXCEPT";
+        public List<Column> getColumns() {
+            return mColumns;
         }
     }
 
-    public static class Union extends Expression {
-        public Union(Select s1, Select s2) { super(s1, s2, false, true, true); }
+    public static class Union extends BinaryQueryStatement {
+        public Union(Select s1, Select s2) { super(s1, s2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -538,8 +559,25 @@ public class Operators {
         }
     }
 
-    public static class Intersect extends Expression {
-        public Intersect(Select s1, Select s2) { super(s1, s2, false, true, true); }
+    public static class Except extends BinaryQueryStatement {
+        public Except(Select s1, Select s2) {
+            super(s1, s2);
+            // MySQL doesn't support EXCEPT
+            SqlBuilderInternalUtil.throwIfCurrentLanguageIs(SqlLanguage.MySQL);
+        }
+
+        @Override
+        protected String getOperatorKeyword() {
+            return "EXCEPT";
+        }
+    }
+
+    public static class Intersect extends BinaryQueryStatement {
+        public Intersect(Select s1, Select s2) {
+            super(s1, s2);
+            // MySQL doesn't support INTERSECT
+            SqlBuilderInternalUtil.throwIfCurrentLanguageIs(SqlLanguage.MySQL);
+        }
 
         @Override
         protected String getOperatorKeyword() {

@@ -11,6 +11,9 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    /* MySql connector */
+    testCompile group: 'mysql', name: 'mysql-connector-java', version: '8.0.12'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {

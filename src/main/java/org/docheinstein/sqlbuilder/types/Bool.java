@@ -3,6 +3,10 @@ package org.docheinstein.sqlbuilder.types;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * SQL type that wraps a {@link Boolean};
+ * translated into TINYINT(1).
+ */
 public class Bool extends Type<Boolean> {
 
     @Override

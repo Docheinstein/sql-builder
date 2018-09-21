@@ -7,8 +7,12 @@ import org.docheinstein.sqlbuilder.commons.SqlLanguage;
 import org.docheinstein.sqlbuilder.models.Table;
 import org.docheinstein.sqlbuilder.statements.base.DropTrigger;
 
+/**
+ * Represents a specific DROP TRIGGER statement that respect PostgreSQL syntax.
+ */
 public class DropTriggerPostgreSQL extends DropTrigger {
 
+    /** Drop action. */
     public enum DropOption implements Sqlable {
         Cascade("CASCADE"),
         Restrict("RESTRICT"),
@@ -26,33 +30,65 @@ public class DropTriggerPostgreSQL extends DropTrigger {
         }
     }
 
+    /** Table from which drop the trigger. */
     private final Table mTable;
+
+    /** Drop option. */
     private DropOption mDropOption;
 
+    /**
+     * Creates a DROP TRIGGER statement using MySQL syntax.
+     * <p>
+     * Ensures that {@link org.docheinstein.sqlbuilder.commons.SqlBuilder#setLanguage(SqlLanguage)}
+     * has been set properly before create this object.
+     * @param triggerName the trigger name
+     * @param table the name of the table from which drop the trigger
+     */
     public DropTriggerPostgreSQL(String triggerName, Table table) {
         super(triggerName);
         mTable = table;
 
-        SqlBuilderInternalUtil.ensureLanguage(SqlLanguage.PostgreSQL);
+        SqlBuilderInternalUtil.throwIfCurrentLanguageIsNot(SqlLanguage.PostgreSQL);
     }
 
+    /**
+     * Sets CASCADE as drop option.
+     * @return this statement
+     */
+    public DropTriggerPostgreSQL cascade() {
+        return option(DropOption.Cascade);
+    }
+
+    /**
+     * Sets the drop option for this statement
+     * @param dropOption the drop option
+     * @return this statement
+     */
     public DropTriggerPostgreSQL option(DropOption dropOption) {
         mDropOption = dropOption;
         return this;
     }
 
+    /**
+     * Sets RESTRICT as drop option.
+     * @return this statement
+     */
     public DropTriggerPostgreSQL restrict() {
         return option(DropOption.Restrict);
     }
 
-    public DropTriggerPostgreSQL cascade() {
-        return option(DropOption.Cascade);
-    }
-
+    /**
+     * Returns the table from which the trigger has to be dropped.
+     * @return the table from which drop the trigger
+     */
     public Table getTable() {
         return mTable;
     }
 
+    /**
+     * Returns the drop action tu use.
+     * @return the drop action of this statement
+     */
     public DropOption getDropOption() {
         return mDropOption;
     }
@@ -67,7 +103,5 @@ public class DropTriggerPostgreSQL extends DropTrigger {
         SqlBuilderLogger.out("Created [DROP TRIGGER] SQL {" + sqlStr + "}");
 
         return sqlStr;
-
-
     }
 }

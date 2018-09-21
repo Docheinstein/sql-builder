@@ -4,6 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 
+/**
+ * SQL type that wraps a date (actually a {@link String});
+ * translated into DATE.
+ */
 public class Date extends Type<String> {
 
     @Override

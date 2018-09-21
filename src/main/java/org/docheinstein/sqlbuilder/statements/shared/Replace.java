@@ -9,11 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
-REPLACE INTO User VALUES (?, ?, ?)
-*/
+ * REPLACE INTO User VALUES (?, ?, ?)
+ */
 
+/**
+ * Represents a REPLACE INTO statement.
+ */
 public class Replace extends Put<Replace> {
 
+    /**
+     * Creates a REPLACE INTO statement for the given table.
+     * @param table the table
+     */
     public Replace(Table table) {
         super(table);
     }

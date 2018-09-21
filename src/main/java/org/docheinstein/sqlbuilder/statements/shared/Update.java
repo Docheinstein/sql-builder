@@ -20,27 +20,89 @@ SET column1 = value1, column2 = value2, ...
 WHERE condition;
 */
 
-public class Update extends UpdateStatement {
+/**
+ * Represents an UPDATE statement.
+ */
+public class Update implements UpdateStatement {
+
+    /** Table to update. */
     private Table mTable;
+
+    /** List of assignment between columns and values. */
     private List<Pair<String, Object>> mSetPairs = new ArrayList<>();
+
+    /** WHERE expression. */
     private Expression mWhere;
 
+    /**
+     * Creates an UPDATE statement for the given table.
+     * @param table the table to update
+     */
     public Update(Table table) {
         mTable = table;
     }
 
-
-    public Update setsFromTuple(Tuple tuple) {
-        return setsFromTuple(tuple, true);
+    /**
+     * Adds a SET assignment between a column and its value.
+     * @param column the column
+     * @param value the value to assign to the given column
+     * @param <T> the shared type between column and value
+     * @return this statement
+     */
+    // This is preferred over the generic set() for have type control
+    public <T> Update set(Column<T> column, T value) {
+        return set(column.getName(), value);
     }
 
-    public Update setsFromTuple(Tuple tuple, boolean skipNull) {
-        // Retrieve the column field map
+    /**
+     * Adds a SET assignment between a column and its value.
+     * @param columnName the column name
+     * @param value the value to assign to the given column
+     * @return this statement
+     */
+    public Update set(String columnName, Object value) {
+        mSetPairs.add(new Pair<>(columnName, value));
+        return this;
+    }
 
+    /**
+     * Adds a SET assignment for each
+     * {@link org.docheinstein.sqlbuilder.models.ColumnField}
+     * of the tuple between the annotated column and the tuple's value.
+     *
+     * <p>
+     *
+     * This method skip the null values of the tuple; for different behaviour
+     * see {@link #setFromTuple(Tuple, boolean).
+     *
+     * @param tuple the tuple from which figure out the SET assignments
+     * @return this statement
+     *
+     * @see #setFromTuple(Tuple, boolean)
+     */
+    public Update setFromTuple(Tuple tuple) {
+        return setFromTuple(tuple, true);
+    }
+
+    /**
+     * Adds a SET assignment for each
+     * {@link org.docheinstein.sqlbuilder.models.ColumnField}
+     * of the tuple between the annotated column and the tuple's value.
+     * @param tuple the tuple from which figure out the SET assignments
+     * @param skipNull whether null values of the variables of the tuple
+     *                 have to be ignored.
+     *                 i.e. if skipNull is specified then the columns of the
+     *                 null values are not affected by the statement, otherwise
+     *                 the column of the null values are assigned as 'column = NULL'
+     * @return this statement
+     */
+    public Update setFromTuple(Tuple tuple, boolean skipNull) {
+
+        // Retrieve the column field map
         Map<String, Field> columnFieldMap;
 
         try {
-            columnFieldMap = SqlBuilderInternalUtil.getCachedColumnFieldOrCreateAndCache(tuple.getClass());
+            columnFieldMap = SqlBuilderInternalUtil.getColumnFields(tuple.getClass());
         } catch (IllegalAccessException | InstantiationException e) {
             throw new RuntimeException("Error while trying to access column field of class "
                 + tuple.getClass().getName());
@@ -72,16 +134,12 @@ public class Update extends UpdateStatement {
         return this;
     }
 
-    public Update set(String columnName, Object value) {
-        mSetPairs.add(new Pair<>(columnName, value));
-        return this;
-    }
 
-    // Prefer this instead of the generic set() for have type control
-    public <T> Update set(Column<T> column, T value) {
-        return set(column.getName(), value);
-    }
-
+    /**
+     * Sets the WHERE expression of this statement.
+     * @param whereExpression the WHERE expression
+     * @return this statement
+     */
     public Update where(Expression whereExpression) {
         mWhere = whereExpression;
         return this;
@@ -99,13 +157,12 @@ public class Update extends UpdateStatement {
 
 
             sql.append(SqlBuilderInternalUtil.getAsCommaList(
-                mSetPairs, setPair ->
-                    setPair.getKey() +
-                        " = ?"));
+                mSetPairs,
+                setPair -> setPair.getKey() + " = ?"));
         }
 
         // WHERE
-        sql.append(SqlBuilderInternalUtil.getExpressionCondition(mWhere, "WHERE"));
+        sql.append(SqlBuilderInternalUtil.getNamedExpressionAsString(mWhere, "WHERE"));
 
         String sqlStr = sql.toString();
 
@@ -116,6 +173,9 @@ public class Update extends UpdateStatement {
 
     @Override
     public List<Object> getBindableObjects() {
+        // The bindable objects are the values of the SET assignemnts and
+        // the bindable objects of the WHERE
+
         List<Object> bindables = new ArrayList<>();
 
         for (Pair<String, Object> setPair : mSetPairs)

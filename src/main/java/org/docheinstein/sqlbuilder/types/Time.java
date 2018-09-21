@@ -4,6 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 
+/**
+ * SQL type that wraps a time (actually a {@link String});
+ * translated into TIME.
+ */
 public class Time extends Type<String> {
 
     @Override

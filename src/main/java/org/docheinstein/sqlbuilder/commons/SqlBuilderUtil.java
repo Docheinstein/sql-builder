@@ -12,10 +12,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Contains a bunch of method used frequently by end users.
+ */
 public class SqlBuilderUtil {
 
-    // ---------------------- EXISTENCE -----------------------
+    // -------------------------------------------------------------------------
+    // ---------------------------- EXISTENCE ----------------------------------
+    // -------------------------------------------------------------------------
 
+    /**
+     * Returns true if the given table exists.
+     * @param table the table
+     * @param connection the connection
+     * @return whether the table exists
+     */
     public static boolean checkExistence(Table table, Connection connection) {
         if (table == null || connection == null)
             throw new InvalidParameterException("Table and connection must be not null");
@@ -28,6 +39,12 @@ public class SqlBuilderUtil {
         }
     }
 
+    /**
+     * Returns true if the given column exists in its table
+     * @param column the table
+     * @param connection the connection
+     * @return  whether the table exists
+     */
     public static boolean checkExistence(Column column, Connection connection) {
         if (column == null || connection == null)
             throw new InvalidParameterException("Column and connection must be not null");
@@ -41,13 +58,29 @@ public class SqlBuilderUtil {
             return false;
         }
     }
+    // -------------------------------------------------------------------------
+    // ------------------------------ SELECT -----------------------------------
+    // -------------------------------------------------------------------------
 
-    // ---------------------- SELECT -----------------------
-
+    /**
+     * Returns the COUNT(*) of a table.
+     * @param table the table
+     * @param connection the connection
+     * @return the number of rows of the table
+     * @throws SQLException if the query fails
+     */
     public static int getCount(Table table, Connection connection) throws SQLException {
         return getCount(table, null, connection);
     }
 
+    /**
+     * Returns the COUNT(*) of a table using the given WHERE expression
+     * @param table the table
+     * @param whereExpression an optional where expression
+     * @param connection the connection
+     * @return the number of rows of the table for the given where expression
+     * @throws SQLException  if the query fails
+     */
     public static int getCount(Table table, Expression whereExpression,
                                Connection connection) throws SQLException {
         if (table == null || connection == null)
@@ -64,8 +97,17 @@ public class SqlBuilderUtil {
         return 0;
     }
 
+    /**
+     * Returns the first tuple of the table using the given SELECT statement.
+     * @param select the select statement
+     * @param tupleClass the class of the tuple (must be passed because of type erasure)
+     * @param connection the connection
+     * @param <T> the type of the tuple
+     * @return the first tuple of the column for the given SELECT statement
+     * @throws SQLException  if the query fails
+     */
     public static <T extends Tuple> T fetchFirst(Select select, Class<T> tupleClass,
-                                               Connection connection)
+                                                 Connection connection)
         throws SQLException {
         if (select == null || connection == null)
             throw new InvalidParameterException("Select and connection must be not null");
@@ -83,6 +125,17 @@ public class SqlBuilderUtil {
 
     }
 
+    /**
+     * Returns the first tuple of the table using the given SELECT statement
+     * which will be retrieved from the cache if has already been used.
+     * @param select the select statement
+     * @param tupleClass the class of the tuple (must be passed because of type erasure)
+     * @param connection the connection
+     * @param cacheIdentifier the unique identifier of the statement
+     * @param <T> the type of the tuple
+     * @return the first tuple of the column for the given SELECT statement
+     * @throws SQLException  if the query fails
+     */
     public static <T extends Tuple> T fetchFirstCache(Select select, Class<T> tupleClass,
                                                       Connection connection, int cacheIdentifier)
         throws SQLException {
@@ -102,5 +155,4 @@ public class SqlBuilderUtil {
 
         return null;
     }
-
 }

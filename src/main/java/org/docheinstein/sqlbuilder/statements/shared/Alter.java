@@ -9,13 +9,49 @@ import org.docheinstein.sqlbuilder.statements.base.UpdateStatement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Alter extends UpdateStatement {
+/*
+ * ALTER TABLE table DROP COLUMN c, DROP COLUMN d;
+ */
+/**
+ * Represents an ALTER TABLE statement.
+ */
+public class Alter implements UpdateStatement {
+
+    /** Table to alter. */
     private Table mTable;
+
+    /** List of columns to add to the table. */
     private List<Column> mAddColumns = new ArrayList<>();
+
+    /** List of columns to drop from the table. */
     private List<Column> mDropColumns = new ArrayList<>();
 
+    /**
+     * Creates an ALTER TABLE statement for the given table.
+     * @param table the table to alter
+     */
     public Alter(Table table) {
         mTable = table;
+    }
+
+    /**
+     * Adds a column to the list of columns to add to the table.
+     * @param c the column to add
+     * @return this statement
+     */
+    public Alter add(Column c) {
+        mAddColumns.add(c);
+        return this;
+    }
+
+    /**
+     * Adds a column to the list of columns to drop from the table.
+     * @param c the column to add
+     * @return this statement
+     */
+    public Alter drop(Column c) {
+        mDropColumns.add(c);
+        return this;
     }
 
     @Override
@@ -25,16 +61,16 @@ public class Alter extends UpdateStatement {
         sql.append(" ");
 
         sql.append(SqlBuilderInternalUtil.getAsCommaList(
-            mAddColumns, c ->
-                "ADD COLUMN " + c.getColumnDefinition())
+            mAddColumns,
+            c -> "ADD COLUMN " + c.getColumnDefinition())
         );
 
         if (mAddColumns.size() > 0 && mDropColumns.size() > 0)
             sql.append(", ");
 
         sql.append(SqlBuilderInternalUtil.getAsCommaList(
-            mDropColumns, c ->
-                "DROP COLUMN " + c.getColumnDefinition())
+            mDropColumns,
+            c -> "DROP COLUMN " + c.getColumnDefinition())
         );
 
         String sqlStr = sql.toString();
@@ -42,16 +78,6 @@ public class Alter extends UpdateStatement {
         SqlBuilderLogger.out("Created [ALTER] SQL {" + sqlStr + "}");
 
         return sqlStr;
-    }
-
-    public Alter add(Column c) {
-        mAddColumns.add(c);
-        return this;
-    }
-
-    public Alter drop(Column c) {
-        mDropColumns.add(c);
-        return this;
     }
 
     @Override

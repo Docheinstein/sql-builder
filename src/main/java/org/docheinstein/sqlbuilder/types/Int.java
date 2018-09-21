@@ -3,13 +3,26 @@ package org.docheinstein.sqlbuilder.types;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * SQL type that wraps an {@link Integer});
+ * translated into INTEGER.
+ */
 public class Int extends Type<Integer> {
+
+    /** Maximum length of the INTEGER type. */
+    // INTEGER(<length>)
     private Integer mLength;
 
-    public Int() {
+    /**
+     * Creates an INTEGER type with unspecified length
+     * (the decision is left to the DBMS).
+     */
+    public Int() {}
 
-    }
-
+    /**
+     * Creates an INTEGER type.
+     * @param length the length of the INTEGER
+     */
     public Int(int length) {
         mLength = length;
     }

@@ -6,9 +6,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 
+/**
+ * SQL type that wraps an enumeration (actually a {@link String});
+ * translated into ENUM.
+ */
 public class Enum extends Type<String> {
+
+    /** Allowed values of the enumeration. */
     private String[] mValues;
 
+    /**
+     * Creates an ENUM type for the given allowed values
+     * @param values the enum's values
+     */
     public Enum(String... values) {
         mValues = values;
     }
@@ -22,7 +32,9 @@ public class Enum extends Type<String> {
     public String toSql() {
         return
             "ENUM (" +
-            SqlBuilderInternalUtil.getAsCommaList(Arrays.asList(mValues), s -> "'" + s + "'")
+            SqlBuilderInternalUtil.getAsCommaList(
+                Arrays.asList(mValues), s -> "'" + s + "'"
+            )
             + ")";
     }
 }

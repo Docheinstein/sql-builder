@@ -9,18 +9,34 @@ import org.docheinstein.sqlbuilder.statements.base.UpdateStatement;
 import java.util.List;
 
 /*
-DELETE FROM table_name
-WHERE condition;
-*/
+ * DELETE FROM table_name
+ * WHERE condition;
+ */
 
-public class Delete extends UpdateStatement {
+/**
+ * Represents a DELETE FROM statement.
+ */
+public class Delete implements UpdateStatement {
+
+    /** Table from which delete. */
     private Table mTable;
+
+    /** Where expression of this statement. */
     private Expression mWhere;
 
+    /**
+     * Creates a DELETE FROM statement for the given table.
+     * @param table the table
+     */
     public Delete(Table table) {
         mTable = table;
     }
 
+    /**
+     * Sets the where expression to use for this DELETE FROM statement.
+     * @param whereExpression the where condition
+     * @return this statement
+     */
     public Delete where(Expression whereExpression) {
         mWhere = whereExpression;
         return this;
@@ -32,7 +48,7 @@ public class Delete extends UpdateStatement {
         sql.append(mTable.getName());
 
         // WHERE
-        sql.append(SqlBuilderInternalUtil.getExpressionCondition(mWhere, "WHERE"));
+        sql.append(SqlBuilderInternalUtil.getNamedExpressionAsString(mWhere, "WHERE"));
 
         String sqlStr = sql.toString();
 

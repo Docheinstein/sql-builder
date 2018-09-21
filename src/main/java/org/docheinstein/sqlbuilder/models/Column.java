@@ -9,78 +9,177 @@ import org.docheinstein.sqlbuilder.types.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a column of {@link Table}.
+ * @param <T> the java type this column is mapped to.
+ */
 public class Column<T> implements SqlBindable {
+
+    /** Name of the table this column belongs to. */
     private String mTable;
+
+    /** Column name. */
     private String mColumnName;
+
+    /** Column type. */
     private Type<T> mColumnType;
+
+    /** Whether this column has AUTO_INCREMENT flag. */
     private boolean mAutoIncrement = false;
+
+    /** Whether this column is primary key. */
     private boolean mPrimaryKey = false;
+
+    /** Whether this column has NOT NULL flag. */
     private boolean mNotNull = false;
 
+    /**
+     * Creates a column for the given table, column name and type.
+     * @param table the table this column belongs to
+     * @param name the column name
+     * @param type the column type
+     */
     public Column(Table table, String name, Type<T> type) {
         this(table != null ? table.getName() : null, name, type);
     }
 
+    /**
+     * Creates a column for the given table, column name and type.
+     * <p>
+     * This constructor MUST be used if the column is created within the creation
+     * of the table since pass the table object instead of the table name as
+     * string would lead to a failure in calling table.getName().
+     * @param tableName the table this column belongs to
+     * @param name the column name
+     * @param type the column type
+     */
     public Column(String tableName, String name, Type<T> type) {
         mTable = tableName;
         mColumnName = name;
         mColumnType = type;
     }
 
+    // -------------------------------------------------------------------------
+    // ----------------------------- DDL ---------------------------------------
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets/unsets the PRIMARY KEY flag.
+     * @param primaryKey whether this column has the PRIMARY KEY flag
+     * @return this column
+     */
     public Column<T> primaryKey(boolean primaryKey) {
         mPrimaryKey = primaryKey;
         return this;
     }
 
+    /**
+     * Sets the PRIMARY KEY flag.
+     * @return this column
+     */
     public Column<T> primaryKey() {
         return primaryKey(true);
     }
 
+    /**
+     * Sets/unsets the NOT NULL flag.
+     * @param notNull whether this column has the NOT NULL flag.
+     * @return this column
+     */
     public Column<T> notNull(boolean notNull) {
         mNotNull = notNull;
         return this;
     }
 
+    /**
+     * Sets the NOT NULL flag.
+     * @return this column
+     */
     public Column<T> notNull() {
         return notNull(true);
     }
 
+    /**
+     * Sets the AUTO_INCREMENT flag
+     * @return this column
+     */
+    public Column<T> autoIncrement() {
+        return autoIncrement(true);
+    }
+
+    /**
+     * Sets/unsets the AUTO_INCREMENT flag
+     * @param autoIncrement whether this column has the AUTO_INCREMENT flag
+     * @return this column
+     */
     public Column<T> autoIncrement(boolean autoIncrement) {
         mAutoIncrement = autoIncrement;
         return this;
     }
 
-    public Column<T> autoIncrement() {
-        return autoIncrement(true);
-    }
+    // -------------------------------------------------------------------------
+    // --------------------------- UTILITIES -----------------------------------
+    // -------------------------------------------------------------------------
 
-    public boolean isAutoIncrement() {
-        return mAutoIncrement;
-    }
+    // DDL
 
-
+    /**
+     * Returns whether this column has the PRIMARY KEY flag.
+     * @return whether this column has the PRIMARY KEY flag
+     */
     public boolean isPrimaryKey() {
         return mPrimaryKey;
     }
 
+    /**
+     * Returns whether this column has the NOT NULL flag.
+     * <p>
+     * Note that this is VERY DIFFERENT from {@link #isNotNull()} since the
+     * former belongs to DDL while the latter is used for create queries.
+     * @return whether this column has the NOT NULL flag
+     */
     public boolean getNotNull() {
         return mNotNull;
     }
 
+    /**
+     * Returns whether this column has the AUTO_INCREMENT flag.
+     * @return whether this column has the AUTO_INCREMENT flag
+     */
+    public boolean isAutoIncrement() {
+        return mAutoIncrement;
+    }
+
+    // GENERAL
+
+    /**
+     * Returns the name of the table this column belongs to.
+     * @return the table name
+     */
     public String getTable() {
         return mTable;
     }
 
+    /**
+     * Returns the column name.
+     * @return the column name
+     */
     public String getName() {
         return mColumnName;
     }
 
+    /**
+     * Returns the column type.
+     * @return the column type
+     */
     public Type<T> getType() {
         return mColumnType;
     }
 
-    // Non necessary but utils method
-
+    /**
+     * Returns a string composed as follow TABLE.COLUMN
+     * @return the table name, a dot and the column name
+     */
     public String getTableDotName() {
         String tableNameDotColumnName = "";
         if (mTable != null)
@@ -89,10 +188,20 @@ public class Column<T> implements SqlBindable {
         return tableNameDotColumnName;
     }
 
+    /**
+     * Returns true if the table name, the column name and the column type are not null.
+     * @return whether the column is well defined
+     */
     public boolean isWellDefined() {
         return mTable != null && mColumnName != null && mColumnType != null;
     }
 
+    /**
+     * Returns the DDL string for this column.
+     * <p>
+     * e.g. USERNAME PRIMARY KEY AUTO_INCREMENT
+     * @return the definition of this column
+     */
     public String getColumnDefinition() {
         String colStr = mColumnName + " " + mColumnType.toSql();
         if (isPrimaryKey())
@@ -105,9 +214,24 @@ public class Column<T> implements SqlBindable {
         return colStr;
     }
 
-    // ==================
-    // === ARITHMETIC ===
-    // ==================
+
+    @Override
+    public String toSql() {
+        return getTableDotName();
+    }
+
+    @Override
+    public List<Object> getBindableObjects() {
+        return new ArrayList<>();
+    }
+
+    // -------------------------------------------------------------------------
+    // -------------------------------- DQL ------------------------------------
+    // -------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------
+    // ---------------------------- ARITHMETIC ---------------------------------
+    // -------------------------------------------------------------------------
 
     // +
 
@@ -159,9 +283,9 @@ public class Column<T> implements SqlBindable {
 
     public Expression mod(Expression expr) { return new Operators.Mod(this, expr); }
 
-    // ==================
-    // === COMPARISON ===
-    // ==================
+    // -------------------------------------------------------------------------
+    // ---------------------------- COMPARISON ---------------------------------
+    // -------------------------------------------------------------------------
 
     // =
 
@@ -239,9 +363,9 @@ public class Column<T> implements SqlBindable {
         return new Operators.Le(this, expr);
     }
 
-    // ==================
-    // ==== LOGICAL =====
-    // ==================
+    // -------------------------------------------------------------------------
+    // ----------------------------- LOGICAL -----------------------------------
+    // -------------------------------------------------------------------------
 
     // AND
 
@@ -309,25 +433,9 @@ public class Column<T> implements SqlBindable {
 
     public Expression isNotNull() { return new Operators.IsNotNull(this); }
 
-    // ============================
-    // === SUB QUERY OPERATORS ====
-    // ============================
-
-    // IN
-
-    public Expression in(Select expr) {
-        return new Operators.In(this, expr);
-    }
-
-    // NOT IN
-
-    public Expression notIn(Select expr) {
-        return new Operators.NotIn(this, expr);
-    }
-
-    // ==================
-    // ==== BITWISE =====
-    // ==================
+    // -------------------------------------------------------------------------
+    // ----------------------------- BITWISE -----------------------------------
+    // -------------------------------------------------------------------------
 
     // &
 
@@ -371,13 +479,19 @@ public class Column<T> implements SqlBindable {
         return new Operators.BitXor(this, expr);
     }
 
-    @Override
-    public String toSql() {
-        return getTableDotName();
+    // -------------------------------------------------------------------------
+    // --------------------------- SUB QUERY -----------------------------------
+    // -------------------------------------------------------------------------
+
+    // IN
+
+    public Expression in(Select expr) {
+        return new Operators.In(this, expr);
     }
 
-    @Override
-    public List<Object> getBindableObjects() {
-        return new ArrayList<>();
+    // NOT IN
+
+    public Expression notIn(Select expr) {
+        return new Operators.NotIn(this, expr);
     }
 }

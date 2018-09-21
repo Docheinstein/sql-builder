@@ -9,7 +9,14 @@ import org.docheinstein.sqlbuilder.statements.postgresql.DropTriggerPostgreSQL;
 
 import java.util.List;
 
+/**
+ * Contains methods for create {@link org.docheinstein.sqlbuilder.statements.base.Statement}.
+ */
 public class Statements {
+
+    // -------------------------------------------------------------------------
+    // ------------------------------- DDL -------------------------------------
+    // -------------------------------------------------------------------------
 
     public static Create create(Table table) {
         return new Create(table);
@@ -21,33 +28,12 @@ public class Statements {
 
     public static Drop drop(Table table) { return new Drop(table); }
 
-    public static Insert insert(Table table) {
-        return new Insert(table);
-    }
-
-    public static Replace replace(Table table) {
-        return new Replace(table);
-    }
-
-    public static Select select(String... columns) {
-        return new Select(columns);
-    }
-
-    public static Select select(Column... columns) {
-        return new Select(columns);
-    }
-
-    public static Select select(List<Column> columns) {
-        return new Select(columns);
-    }
-
-    public static Update update(Table table) { return new Update(table); }
 
     public static Alter alter(Table table) {
         return new Alter(table);
     }
 
-    // ----------------
+    // ------------------------- DDL [TRIGGERS] --------------------------------
 
     public static CreateTriggerMySQL createTrigger(
         String triggerName, CreateTriggerMySQL.ActionTime actionTime,
@@ -84,4 +70,33 @@ public class Statements {
         return new DropTriggerPostgreSQL(triggerName, table);
     }
 
+    // -------------------------------------------------------------------------
+    // ------------------------------- DML -------------------------------------
+    // -------------------------------------------------------------------------
+
+    public static Insert insert(Table table) {
+        return new Insert(table);
+    }
+
+    public static Replace replace(Table table) {
+        return new Replace(table);
+    }
+
+    public static Update update(Table table) { return new Update(table); }
+
+    // -------------------------------------------------------------------------
+    // ------------------------------- DQL -------------------------------------
+    // -------------------------------------------------------------------------
+
+    public static Select select(String... columns) {
+        return new Select(columns);
+    }
+
+    public static Select select(Column... columns) {
+        return new Select(columns);
+    }
+
+    public static Select select(List<Column> columns) {
+        return new Select(columns);
+    }
 }
