@@ -166,7 +166,7 @@ perform any kind of statement (SELECT, INSERT, UPDATE, ...)
 The source code contains a bunch of valid example for the most common queries, 
 but since I'm pretty sure you are quite lazy, a few of those will be reported here.
 
-#####CREATE TABLE
+**CREATE TABLE**
 
 ```
 /*
@@ -188,7 +188,7 @@ PERSON_TABLE
 The definition of the table is obviously taken from the class we've just created
 (the one that extends `Table`).
 
-#####INSERT INTO
+**INSERT INTO**
 
 There are two different ways for insert values into a table, the most classic
 way is specify each value to insert "manually", as follows:
@@ -226,7 +226,7 @@ int johnWhiteId =
         .exec(mConnection, true /* return auto increment key */);
 ```
 
-#####SELECT
+**SELECT**
 
 Okok, CREATE and INSERT were easy, now begins the tough stuff: SELECT statements.
 
