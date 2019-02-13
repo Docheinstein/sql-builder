@@ -70,7 +70,7 @@ public class Alter implements UpdateStatement {
 
         sql.append(SqlBuilderInternalUtil.getAsCommaList(
             mDropColumns,
-            c -> "DROP COLUMN " + c.getColumnDefinition())
+            c -> "DROP COLUMN " + c.getName())
         );
 
         String sqlStr = sql.toString();
