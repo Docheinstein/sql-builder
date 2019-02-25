@@ -8,6 +8,7 @@ import org.docheinstein.sqlbuilder.models.Column;
 import org.docheinstein.sqlbuilder.models.Table;
 import org.docheinstein.sqlbuilder.statements.base.UpdateStatement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -128,6 +129,27 @@ public class Create implements UpdateStatement {
 
     @Override
     public List<Object> getBindableObjects() {
-        return mTable.getCheck() == null ? null : mTable.getCheck().getBindableObjects();
+
+        List<Object> objects = new ArrayList<>();
+
+        Expression checkExpr = mTable.getCheck();
+
+        // Columns may have DEFAULT value has bindable
+        for (Column c : mTable.getColumns()) {
+            List cBindables = c.getBindableObjects();
+
+            if (cBindables != null)
+                objects.addAll(cBindables);
+        }
+
+        if (checkExpr != null) {
+            List<Object> checkBindables = checkExpr.getBindableObjects();
+
+            if (checkBindables != null)
+                objects.addAll(checkBindables);
+        }
+
+
+        return objects;
     }
 }

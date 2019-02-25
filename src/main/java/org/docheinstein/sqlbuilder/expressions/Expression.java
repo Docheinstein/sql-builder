@@ -1,7 +1,7 @@
 package org.docheinstein.sqlbuilder.expressions;
 
 import org.docheinstein.sqlbuilder.SqlBindable;
-import org.docheinstein.sqlbuilder.models.BindableObject;
+import org.docheinstein.sqlbuilder.models.SqlBindableObject;
 import org.docheinstein.sqlbuilder.models.Column;
 import org.docheinstein.sqlbuilder.statements.base.Statement;
 
@@ -34,27 +34,12 @@ public abstract class Expression implements SqlBindable {
     private final String mOperatorKeyword;
 
     /**
-     * The outer SQL pattern to use for this expression.
-     *
-     * <p>
-     *
-     * This actually can be (EXPRESSION_PATTERN) or EXPRESSION_PATTERN.
-     *
-     * <p>
-     *
-     * This is kept in order to figure out if the expression needs the outer
-     * parentheses or not (some statements don't work with outer parentheses,
-     * other need those).
-     */
-    private final String mSqlPattern;
-
-    /**
      * The left bindable object which can provide a list of object
      * this expression have to be bound to.
      *
      * <p>
      *
-     * Note that this can either be a simple {@link BindableObject} or another
+     * Note that this can either be a simple {@link SqlBindableObject} or another
      * {@link Expression} (since an expression is a {@link SqlBindable} itself).
      */
     private final SqlBindable mBindable1;
@@ -66,10 +51,25 @@ public abstract class Expression implements SqlBindable {
      *
      * <p>
      *
-     * Note that this can either be a simple {@link BindableObject} or another
+     * Note that this can either be a simple {@link SqlBindableObject} or another
      * {@link Expression} (since an expression is a {@link SqlBindable} itself).
      */
     private final SqlBindable mBindable2;
+
+    /** Whether the expression should be enclosed in outer parentheses. */
+    private boolean mEnclosingParentheses;
+
+    /**
+     * Whether the first member of the expression
+     * should be enclosed in parentheses.
+     **/
+    private boolean mFirstParentheses;
+
+    /**
+     * Whether the second member of the expression
+     * should be enclosed in parentheses.
+     **/
+    private boolean mSecondParentheses;
 
     /*
         Expression | Expression
@@ -144,7 +144,7 @@ public abstract class Expression implements SqlBindable {
     // Expression | Object
     protected Expression(Expression e, Object v, boolean enclosingParentheses,
                          boolean firstParentheses,  boolean secondParentheses) {
-        this(e, new BindableObject(v), enclosingParentheses, firstParentheses, secondParentheses, 0);
+        this(e, new SqlBindableObject(v), enclosingParentheses, firstParentheses, secondParentheses, 0);
 //        System.out.println("Constructor [3]: e | v");
     }
 
@@ -192,7 +192,7 @@ public abstract class Expression implements SqlBindable {
     // Column<T> | Object (T)
     protected <T> Expression(Column<T> c, T v, boolean enclosingParentheses,
                              boolean firstParentheses,  boolean secondParentheses) {
-        this(c, new BindableObject(v), enclosingParentheses, firstParentheses, secondParentheses, 0);
+        this(c, new SqlBindableObject(v), enclosingParentheses, firstParentheses, secondParentheses, 0);
 //        System.out.println("Constructor [6]: c | v");
     }
 
@@ -224,7 +224,7 @@ public abstract class Expression implements SqlBindable {
     // Object (T) | Object (T)
     protected <T> Expression(T v1, T v2, boolean enclosingParentheses,
                          boolean firstParentheses,  boolean secondParentheses) {
-        this(new BindableObject(v1), new BindableObject(v2),
+        this(new SqlBindableObject(v1), new SqlBindableObject(v2),
             enclosingParentheses, firstParentheses, secondParentheses, 0);
 //        System.out.println("Constructor [8]: v1 | v2");
     }
@@ -382,28 +382,12 @@ public abstract class Expression implements SqlBindable {
                          boolean firstParentheses,
                          boolean secondParentheses,
                          int dummy) {
-        mOperatorKeyword = getOperatorKeyword();
-
-        String b1 = firstParentheses ? "(%s)" : "%s";
-        String b2 = secondParentheses ? "(%s)" : "%s";
-        String internalPattern;
-
-        if (bindable1 != null && bindable2 != null) {
-            internalPattern = b1 + " %s " + b2;
-        }
-        else if (bindable1 != null) {
-            internalPattern = b1 + " %s";
-        }
-        else
-            internalPattern = "%s "  + b2;
-
-        mSqlPattern = enclosingParentheses ? "(" + internalPattern + ")" : internalPattern;
         mBindable1 = bindable1;
         mBindable2 = bindable2;
-//        System.out.println("B1 + " + (bindable1 != null ? bindable1.getClass().getSimpleName() : "null"));
-//        System.out.println("B2 + " + (bindable2 != null ? bindable2.getClass().getSimpleName() : "null"));
-//        System.out.println("B1 + " + (bindable1 != null ? bindable1.toSql() : "null"));
-//        System.out.println("B2 + " + (bindable2 != null ? bindable2.toSql() : "null"));
+        mOperatorKeyword = getOperatorKeyword();
+        mEnclosingParentheses = enclosingParentheses;
+        mFirstParentheses = firstParentheses;
+        mSecondParentheses = secondParentheses;
     }
 
     // -------------------------------------------------------------------------
@@ -588,6 +572,61 @@ public abstract class Expression implements SqlBindable {
 
     public Expression bitXor(Column c) { return new Operators.BitXor(this, c); }
 
+
+    // -------------------------------------------------------------------------
+    // ----------------------------- UTILITIES ---------------------------------
+    // -------------------------------------------------------------------------
+
+
+    /**
+     * Sets the parentheses for this expression.
+     * @param enclosing whether this expression should be enclosed in parentheses
+     * @param first  whether use parentheses for the first member
+     * @param second whether use parentheses for the second member
+     * @return this expression
+     */
+    public Expression parentheses(boolean enclosing, boolean first,
+                                           boolean second) {
+        return
+            this
+                .enclosingParentheses(enclosing)
+                .firstParentheses(first)
+                .secondParentheses(second);
+    }
+
+
+    /**
+     * Sets whether this expression should be enclosed in outer parentheses.
+     * @param yes whether this expression should be enclosed in parentheses
+     * @return this expression
+     */
+    public Expression enclosingParentheses(boolean yes) {
+        mEnclosingParentheses = yes;
+        return this;
+    }
+
+    /**
+     * Sets whether the first member of this expression should be enclosed
+     * in parentheses;
+     * @param yes whether use parentheses for the first member
+     * @return this expression
+     */
+    public Expression firstParentheses(boolean yes) {
+        mFirstParentheses = yes;
+        return this;
+    }
+
+    /**
+     * Sets whether the first member of this expression should be enclosed
+     * in parentheses;
+     * @param yes whether use parentheses for the second member
+     * @return this expression
+     */
+    public Expression secondParentheses(boolean yes) {
+        mSecondParentheses = yes;
+        return this;
+    }
+
     @Override
     public List<Object> getBindableObjects() {
         // Appends all the object from the first bindable to the objects
@@ -614,10 +653,12 @@ public abstract class Expression implements SqlBindable {
 
     @Override
     public String toSql() {
+        String sqlPattern = buildSqlPattern();
+
         // <A> <OPERATOR> <B>
         if (mBindable1 != null && mBindable2 != null)
             return String.format(
-                mSqlPattern,
+                sqlPattern,
                 mBindable1.toSql(),
                 mOperatorKeyword,
                 mBindable2.toSql()
@@ -626,14 +667,14 @@ public abstract class Expression implements SqlBindable {
         // <OPERATOR>
         if (mBindable1 == null && mBindable2 == null)
             return String.format(
-                mSqlPattern,
+                sqlPattern,
                 mOperatorKeyword
             );
 
         // <OPERATOR> <B>
         if (mBindable1 == null)
             return String.format(
-                mSqlPattern,
+                sqlPattern,
                 mOperatorKeyword,
                 mBindable2.toSql()
             );
@@ -641,9 +682,33 @@ public abstract class Expression implements SqlBindable {
         // <A> <OPERATOR>
         // if (mBindable2 == null) always true
             return String.format(
-                mSqlPattern,
+                sqlPattern,
                 mBindable1.toSql(),
                 mOperatorKeyword
             );
+    }
+
+    private String buildSqlPattern() {
+        String b1 = mFirstParentheses ? "(%s)" : "%s";
+        String b2 = mSecondParentheses ? "(%s)" : "%s";
+        String internalPattern;
+
+        if (mBindable1 != null && mBindable2 != null) {
+            internalPattern = b1 + " %s " + b2;
+        }
+        else if (mBindable1 != null) {
+            internalPattern = b1 + " %s";
+        }
+        else
+            internalPattern = "%s "  + b2;
+
+        return
+            mEnclosingParentheses ?
+                "(" + internalPattern + ")" :
+                internalPattern;
+//        System.out.println("B1 + " + (bindable1 != null ? bindable1.getClass().getSimpleName() : "null"));
+//        System.out.println("B2 + " + (bindable2 != null ? bindable2.getClass().getSimpleName() : "null"));
+//        System.out.println("B1 + " + (bindable1 != null ? bindable1.toSql() : "null"));
+//        System.out.println("B2 + " + (bindable2 != null ? bindable2.toSql() : "null"));
     }
 }

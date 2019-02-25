@@ -52,7 +52,7 @@ public class Delete implements UpdateStatement {
 
         String sqlStr = sql.toString();
 
-        SqlBuilderLogger.out("Created [DELETE TABLE] SQL {" + sqlStr + "}");
+        SqlBuilderLogger.out("Created [DELETE] SQL {" + sqlStr + "}");
         return sqlStr;
     }
 

@@ -21,10 +21,10 @@ public class Alter implements UpdateStatement {
     private Table mTable;
 
     /** List of columns to add to the table. */
-    private List<Column> mAddColumns = new ArrayList<>();
+    protected List<Column> mAddColumns = new ArrayList<>();
 
     /** List of columns to drop from the table. */
-    private List<Column> mDropColumns = new ArrayList<>();
+    protected List<Column> mDropColumns = new ArrayList<>();
 
     /**
      * Creates an ALTER TABLE statement for the given table.
@@ -60,13 +60,7 @@ public class Alter implements UpdateStatement {
         sql.append(mTable.getName());
         sql.append(" ");
 
-        sql.append(SqlBuilderInternalUtil.getAsCommaList(
-            mAddColumns,
-            c -> "ADD COLUMN " + c.getColumnDefinition())
-        );
-
-        if (mAddColumns.size() > 0 && mDropColumns.size() > 0)
-            sql.append(", ");
+        sql.append(getAddColumnsSection());
 
         sql.append(SqlBuilderInternalUtil.getAsCommaList(
             mDropColumns,
@@ -82,6 +76,25 @@ public class Alter implements UpdateStatement {
 
     @Override
     public List<Object> getBindableObjects() {
-        return null;
+        List<Object> obs = new ArrayList<>();
+        for (Column c : mAddColumns) {
+            List cObjs = c.getBindableObjects();
+            if (cObjs != null)
+                obs.addAll(cObjs);
+        }
+        return obs;
+    }
+
+    protected String getAddColumnsSection() {
+        StringBuilder s = new StringBuilder(
+            SqlBuilderInternalUtil.getAsCommaList(
+                mAddColumns,
+                c -> "ADD COLUMN " + c.getColumnDefinition())
+            );
+
+        if (mAddColumns.size() > 0 && mDropColumns.size() > 0)
+            s.append(", ");
+
+        return s.toString();
     }
 }

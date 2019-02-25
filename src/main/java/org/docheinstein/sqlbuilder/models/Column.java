@@ -1,6 +1,7 @@
 package org.docheinstein.sqlbuilder.models;
 
 import org.docheinstein.sqlbuilder.SqlBindable;
+import org.docheinstein.sqlbuilder.Sqlable;
 import org.docheinstein.sqlbuilder.expressions.Operators;
 import org.docheinstein.sqlbuilder.expressions.Expression;
 import org.docheinstein.sqlbuilder.statements.shared.Select;
@@ -32,6 +33,9 @@ public class Column<T> implements SqlBindable {
 
     /** Whether this column has NOT NULL flag. */
     private boolean mNotNull = false;
+
+    /** Default value for the column (DEFAULT). */
+    private Object mDefault = null;
 
     /**
      * Creates a column for the given table, column name and type.
@@ -117,6 +121,29 @@ public class Column<T> implements SqlBindable {
         return this;
     }
 
+    /**
+     * Sets the DEFAULT value for the column.
+     * @param value the default value
+     * @return this column
+     */
+    // This is preferred over the generic defaultValueObject() for have type control
+    public Column<T> defaultValue(T value) {
+        mDefault = value;
+        return this;
+    }
+
+    /**
+     * Sets the DEFAULT value for the column as generic object on which will
+     * be invoked the toString() method.
+     * @param value the default value
+     * @return this column
+     */
+    public Column<T> defaultValueObject(Object value) {
+        mDefault = value;
+        return this;
+    }
+
+
     // -------------------------------------------------------------------------
     // --------------------------- UTILITIES -----------------------------------
     // -------------------------------------------------------------------------
@@ -148,6 +175,14 @@ public class Column<T> implements SqlBindable {
      */
     public boolean isAutoIncrement() {
         return mAutoIncrement;
+    }
+
+    /**
+     * Returns whether this column has the DEFAULT value.
+     * @return whether this column has the DEFAULT value
+     */
+    public boolean hasDefaultValue() {
+        return mDefault != null;
     }
 
     // GENERAL
@@ -210,6 +245,8 @@ public class Column<T> implements SqlBindable {
             colStr += " NOT NULL";
         if (isAutoIncrement())
             colStr += " AUTO_INCREMENT";
+        if (hasDefaultValue())
+            colStr += " DEFAULT ?";
         // Inline FK not implemented since MYSQL doesn't support it
         return colStr;
     }
@@ -222,7 +259,12 @@ public class Column<T> implements SqlBindable {
 
     @Override
     public List<Object> getBindableObjects() {
-        return new ArrayList<>();
+        List<Object> objs = null;
+        if (mDefault != null) {
+            objs = new ArrayList<>();
+            objs.add(mDefault);
+        }
+        return objs;
     }
 
     // -------------------------------------------------------------------------

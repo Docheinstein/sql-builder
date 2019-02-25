@@ -274,7 +274,7 @@ public class SqlBuilderInternalUtil {
     }
 
     /**
-     * Bounds the {@link PreparedStatement} bound with the given
+     * Binds the {@link PreparedStatement} with the given
      * list of bindable objects.
      * <p>
      * Actually this method calls {@link PreparedStatement#setObject(int, Object)}
@@ -293,6 +293,8 @@ public class SqlBuilderInternalUtil {
 
         int paramIndex = 1;
 
+        String stmtHash = Integer.toHexString(statement.hashCode());
+
         for (Object bindable : bindables) {
 
             SqlBuilderLogger.out(
@@ -300,7 +302,7 @@ public class SqlBuilderInternalUtil {
                     (bindable != null ?
                         bindable.getClass().getSimpleName() :
                         "Null"
-                    ) + "] to value [" + bindable + "]");
+                    ) + "] to value [" + bindable + "] | stmt = " + stmtHash);
 
             statement.setObject(paramIndex++, bindable);
         }
@@ -310,7 +312,7 @@ public class SqlBuilderInternalUtil {
 
 
     /**
-     * Returns a bound statement for the given sqlbindable onject retrieving the statement
+     * Returns a bound statement for the given sqlbindable object retrieving the statement
      * from the cache if its exists or creating a new statement otherwise.
      * @param connection the connection
      * @param sqlbindable the sqlbindable object for which execute the update

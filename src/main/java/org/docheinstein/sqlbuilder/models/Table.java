@@ -3,6 +3,7 @@ package org.docheinstein.sqlbuilder.models;
 import org.docheinstein.sqlbuilder.clauses.ForeignKey;
 import org.docheinstein.sqlbuilder.commons.SqlLanguage;
 import org.docheinstein.sqlbuilder.expressions.Expression;
+import org.docheinstein.sqlbuilder.statements.mysql.AlterMySQL;
 import org.docheinstein.sqlbuilder.statements.mysql.CreateTriggerMySQL;
 import org.docheinstein.sqlbuilder.statements.postgresql.CreateTriggerPostgreSQL;
 import org.docheinstein.sqlbuilder.statements.postgresql.DropTriggerPostgreSQL;
@@ -215,6 +216,16 @@ public class Table {
      * @return a ALTER TABLE statement
      */
     public Alter alter() { return Statements.alter(this); }
+
+    /**
+     * Creates a ALTER TABLE statement for this table, enhanced with MySQL options.
+     * <p>
+     * Before call this method ensure that
+     * {@link org.docheinstein.sqlbuilder.commons.SqlBuilder#setLanguage(SqlLanguage)}
+     * has been called using {@link SqlLanguage#MySQL} as language.
+     * @return a ALTER TABLE statement
+     */
+    public AlterMySQL alterMySQL() { return Statements.alterMySQL(this); }
 
     /**
      * Creates a CREATE TRIGGER (with MySQL syntax) statement for this table.

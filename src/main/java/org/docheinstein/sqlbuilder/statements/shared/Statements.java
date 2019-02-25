@@ -2,6 +2,8 @@ package org.docheinstein.sqlbuilder.statements.shared;
 
 import org.docheinstein.sqlbuilder.models.Column;
 import org.docheinstein.sqlbuilder.models.Table;
+import org.docheinstein.sqlbuilder.statements.mysql.AlterMySQL;
+import org.docheinstein.sqlbuilder.statements.mysql.CreateDatabaseMySQL;
 import org.docheinstein.sqlbuilder.statements.mysql.CreateTriggerMySQL;
 import org.docheinstein.sqlbuilder.statements.mysql.DropTriggerMySQL;
 import org.docheinstein.sqlbuilder.statements.postgresql.CreateTriggerPostgreSQL;
@@ -18,6 +20,22 @@ public class Statements {
     // ------------------------------- DDL -------------------------------------
     // -------------------------------------------------------------------------
 
+    // ------------------------- DDL [DATABASE] --------------------------------
+
+    public static CreateDatabase createDatabase(String database) {
+        return new CreateDatabase(database);
+    }
+
+    public static CreateDatabaseMySQL createDatabaseMySQL(String database) {
+        return new CreateDatabaseMySQL(database);
+    }
+
+    public static DropDatabase dropDatabase(String database) {
+        return new DropDatabase(database);
+    }
+
+    // ------------------------- DDL [TABLES] ----------------------------------
+
     public static Create create(Table table) {
         return new Create(table);
     }
@@ -28,9 +46,12 @@ public class Statements {
 
     public static Drop drop(Table table) { return new Drop(table); }
 
-
     public static Alter alter(Table table) {
         return new Alter(table);
+    }
+
+    public static AlterMySQL alterMySQL(Table table) {
+        return new AlterMySQL(table);
     }
 
     // ------------------------- DDL [TRIGGERS] --------------------------------

@@ -13,7 +13,7 @@ import java.util.List;
  * <p>
  * This is the simplest and most common implementation of {@link SqlBindable}.
  */
-public class BindableObject implements SqlBindable {
+public class SqlBindableObject implements SqlBindable {
 
     /** The bindable objects which actually contains only an object. */
     private final List<Object> mObject = new ArrayList<>();
@@ -22,7 +22,7 @@ public class BindableObject implements SqlBindable {
      * Creates a bindable object that wraps the given object
      * @param o the object to wrap
      */
-    public BindableObject(Object o) {
+    public SqlBindableObject(Object o) {
         mObject.add(o);
     }
 

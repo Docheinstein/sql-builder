@@ -322,40 +322,50 @@ public class Operators {
             Object | Object, Expression
         */
 
-        public Between(Expression _e, Expression e1, Expression e2) { super(_e, e1.and(e2)); }
-        public Between(Expression _e, Expression e, Column c) { super(_e, e.and(c)); }
-        public Between(Expression _e, Expression e, Object v) { super(_e, e.and(v)); }
+        public Between(Expression _e, Expression e1, Expression e2) { super(_e, sanitized(e1.and(e2))); }
+        public Between(Expression _e, Expression e, Column c) { super(_e, sanitized(e.and(c))); }
+        public Between(Expression _e, Expression e, Object v) { super(_e, sanitized(e.and(v))); }
 
-        public <T> Between(Expression _e, Column<T> c1, Column<T> c2) { super(_e, c1.and(c2)); }
-        public     Between(Expression _e, Column c, Expression e) { super(_e, c.and(e)); }
-        public <T> Between(Expression _e, Column<T> c, T v) { super(_e, c.and(v)); }
+        public <T> Between(Expression _e, Column<T> c1, Column<T> c2) { super(_e, sanitized(c1.and(c2))); }
+        public     Between(Expression _e, Column c, Expression e) { super(_e, sanitized(c.and(e))); }
+        public <T> Between(Expression _e, Column<T> c, T v) { super(_e, sanitized(c.and(v))); }
 
-        public <T> Between(Expression _e, T v1, T v2) { super(_e, new And(v1, v2)); }
-        public     Between(Expression _e, Object v, Expression e) { super(_e, new And(v, e)); }
-
-
-        public <T> Between(Column<T> _c, Expression e1, Expression e2) { super(_c, e1.and(e2)); }
-        public <T> Between(Column<T> _c, Expression e, Column c) { super(_c, e.and(c)); }
-        public <T> Between(Column<T> _c, Expression e, Object v) { super(_c, e.and(v)); }
-
-        public <T> Between(Column<T> _c, Column<T> c1, Column<T> c2) { super(_c, c1.and(c2)); }
-        public <T> Between(Column<T> _c, Column c, Expression e) { super(_c, c.and(e)); }
-        public <T> Between(Column<T> _c, Column<T> c, T v) { super(_c, c.and(v)); }
-
-        public <T> Between(Column<T> _c, T v1, T v2) { super(_c, new And(v1, v2)); }
-        public <T> Between(Column<T> _c, Object v, Expression e) { super(_c, new And(v, e)); }
+        public <T> Between(Expression _e, T v1, T v2) { super(_e, sanitized(new And(v1, v2))); }
+        public     Between(Expression _e, Object v, Expression e) { super(_e, sanitized(new And(v, e))); }
 
 
-        public     Between(Object _v, Expression e1, Expression e2) { super(_v, e1.and(e2)); }
-        public     Between(Object _v, Expression e, Column c) { super(_v, e.and(c)); }
-        public     Between(Object _v, Expression e, Object v) { super(_v, e.and(v)); }
+        public <T> Between(Column<T> _c, Expression e1, Expression e2) { super(_c, sanitized(e1.and(e2))); }
+        public <T> Between(Column<T> _c, Expression e, Column c) { super(_c, sanitized(e.and(c))); }
+        public <T> Between(Column<T> _c, Expression e, Object v) { super(_c, sanitized(e.and(v))); }
 
-        public <T> Between(T _v, Column<T> c1, Column<T> c2) { super(_v, c1.and(c2)); }
-        public     Between(Object _v, Column c, Expression e) { super(_v, c.and(e)); }
-        public <T> Between(T _v, Column<T> c, T v) { super(_v, c.and(v)); }
+        public <T> Between(Column<T> _c, Column<T> c1, Column<T> c2) { super(_c, sanitized(c1.and(c2))); }
+        public <T> Between(Column<T> _c, Column c, Expression e) { super(_c, sanitized(c.and(e))); }
+        public <T> Between(Column<T> _c, Column<T> c, T v) { super(_c, sanitized(c.and(v))); }
 
-        public <T> Between(T _v, T v1, T v2) { super(_v, new And(v1, v2)); }
-        public     Between(Object _v, Object v, Expression e) { super(_v, new And(v, e)); }
+        public <T> Between(Column<T> _c, T v1, T v2) { super(_c, sanitized(new And(v1, v2))); }
+        public <T> Between(Column<T> _c, Object v, Expression e) { super(_c, sanitized(new And(v, e))); }
+
+
+        public     Between(Object _v, Expression e1, Expression e2) { super(_v, sanitized(e1.and(e2))); }
+        public     Between(Object _v, Expression e, Column c) { super(_v, sanitized(e.and(c))); }
+        public     Between(Object _v, Expression e, Object v) { super(_v, sanitized(e.and(v))); }
+
+        public <T> Between(T _v, Column<T> c1, Column<T> c2) { super(_v, sanitized(c1.and(c2))); }
+        public     Between(Object _v, Column c, Expression e) { super(_v, sanitized(c.and(e))); }
+        public <T> Between(T _v, Column<T> c, T v) { super(_v, sanitized(c.and(v))); }
+
+        public <T> Between(T _v, T v1, T v2) { super(_v, sanitized(new And(v1, v2))); }
+        public     Between(Object _v, Object v, Expression e) { super(_v, sanitized(new And(v, e))); }
+
+        /**
+         * Saniteze the AND expression in BETWEEN ? AND ? since MySQL doesn't
+         * accept enclosing parentheses (i.e. BETWEEN ( ? AND ? ) )
+         * @param andExpr the AND expression to sanitize
+         * @return the sanitized AND expression
+         */
+        private static Expression sanitized(Expression andExpr) {
+            return andExpr.parentheses(false, true, true);
+        }
 
         @Override
         protected String getOperatorKeyword() {
