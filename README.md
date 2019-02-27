@@ -23,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.Docheinstein:SqlBuilder:master-SNAPSHOT'
+    compile 'com.github.docheinstein:sql-builder:master-SNAPSHOT'
 }
 
 ```
