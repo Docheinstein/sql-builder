@@ -178,22 +178,16 @@ public class Update implements UpdateStatement {
 
         List<Object> bindables = new ArrayList<>();
 
-        for (Pair<String, Object> setPair : mSetPairs) {
-            SqlBuilderLogger.out("Set bindable: " + setPair.getValue());
+        for (Pair<String, Object> setPair : mSetPairs)
             bindables.add(setPair.getValue());
-        }
 
-        List<Object> whereBindables = mWhere == null ? null : mWhere.getBindableObjects();
+        List<Object> whereBindables =
+            mWhere == null ?
+                null :
+                mWhere.getBindableObjects();
 
         if (whereBindables != null)
             bindables.addAll(whereBindables);
-
-        for (Object b : whereBindables) {
-            SqlBuilderLogger.out("Where bindable: " + b);
-        }
-        for (Object b : bindables) {
-            SqlBuilderLogger.out("Bindable: " + b);
-        }
         return bindables;
     }
 }
