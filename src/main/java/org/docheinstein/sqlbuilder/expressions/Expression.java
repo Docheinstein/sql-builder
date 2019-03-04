@@ -1,6 +1,8 @@
 package org.docheinstein.sqlbuilder.expressions;
 
 import org.docheinstein.sqlbuilder.SqlBindable;
+import org.docheinstein.sqlbuilder.commons.SqlBuilder;
+import org.docheinstein.sqlbuilder.commons.SqlBuilderLogger;
 import org.docheinstein.sqlbuilder.models.SqlBindableObject;
 import org.docheinstein.sqlbuilder.models.Column;
 import org.docheinstein.sqlbuilder.statements.base.Statement;
@@ -631,22 +633,39 @@ public abstract class Expression implements SqlBindable {
     public List<Object> getBindableObjects() {
         // Appends all the object from the first bindable to the objects
         // of the second bindable
-
+//        SqlBuilderLogger.out("getBindableObjects on " + hashCode() + " [" + this.getClass().getSimpleName() + "]");
         List<Object> objects = new ArrayList<>();
-
+//        SqlBuilderLogger.out(this.getClass().getSimpleName() + " Objects #1");
         if (mBindable1 != null) {
             List<Object> b1Objects = mBindable1.getBindableObjects();
 
-            if (b1Objects != null)
+            if (b1Objects != null) {
+//                int i = 0;
+//                for (Object b : b1Objects) {
+//                    i++;
+//                    SqlBuilderLogger.out(this.getClass().getSimpleName() + " " + i + "° object #1: " + b);
+//                }
                 objects.addAll(b1Objects);
+            }
+
         }
+//        SqlBuilderLogger.out(this.getClass().getSimpleName() + " Objects #2");
 
         if (mBindable2 != null) {
             List<Object> b2Objects = mBindable2.getBindableObjects();
 
-            if (b2Objects != null)
+            if (b2Objects != null) {
+//                int i = 0;
+//                for (Object b : b2Objects) {
+//                    i++;
+//                    SqlBuilderLogger.out(this.getClass().getSimpleName() + " " + i + "° object #2: " + b);
+//                }
                 objects.addAll(b2Objects);
+            }
         }
+
+//        SqlBuilderLogger.out(this.getClass().getSimpleName() + " END");
+
 
         return objects;
     }

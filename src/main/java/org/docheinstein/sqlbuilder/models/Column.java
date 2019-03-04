@@ -257,8 +257,8 @@ public class Column<T> implements SqlBindable {
         return getTableDotName();
     }
 
-    @Override
-    public List<Object> getBindableObjects() {
+
+    public List<Object> getDDLBindableObjects() {
         List<Object> objs = null;
         if (mDefault != null) {
             objs = new ArrayList<>();
@@ -521,6 +521,7 @@ public class Column<T> implements SqlBindable {
         return new Operators.BitXor(this, expr);
     }
 
+
     // -------------------------------------------------------------------------
     // --------------------------- SUB QUERY -----------------------------------
     // -------------------------------------------------------------------------
@@ -535,5 +536,15 @@ public class Column<T> implements SqlBindable {
 
     public Expression notIn(Select expr) {
         return new Operators.NotIn(this, expr);
+    }
+
+
+    public List<Object> getDQLBindableObjects() {
+        return getBindableObjects();
+    }
+
+    @Override
+    public List<Object> getBindableObjects() {
+        return null;
     }
 }

@@ -136,7 +136,7 @@ public class Create implements UpdateStatement {
 
         // Columns may have DEFAULT value has bindable
         for (Column c : mTable.getColumns()) {
-            List cBindables = c.getBindableObjects();
+            List cBindables = c.getDDLBindableObjects();
 
             if (cBindables != null)
                 objects.addAll(cBindables);
