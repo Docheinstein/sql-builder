@@ -107,7 +107,7 @@ public class AlterMySQL extends Alter {
     public List<Object> getBindableObjects() {
         List<Object> obs = new ArrayList<>();
         for (AddColumn cpc : mAddColumnsWithPrecedence) {
-            List cObjs = cpc.c.getBindableObjects();
+            List cObjs = cpc.c.getDDLBindableObjects();
             if (cObjs != null)
                 obs.addAll(cObjs);
         }

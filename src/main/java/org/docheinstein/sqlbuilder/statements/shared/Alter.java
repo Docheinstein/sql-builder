@@ -78,7 +78,7 @@ public class Alter implements UpdateStatement {
     public List<Object> getBindableObjects() {
         List<Object> obs = new ArrayList<>();
         for (Column c : mAddColumns) {
-            List cObjs = c.getBindableObjects();
+            List cObjs = c.getDDLBindableObjects();
             if (cObjs != null)
                 obs.addAll(cObjs);
         }
