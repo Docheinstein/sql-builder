@@ -1,8 +1,6 @@
 package org.docheinstein.sqlbuilder.expressions;
 
 import org.docheinstein.sqlbuilder.SqlBindable;
-import org.docheinstein.sqlbuilder.commons.SqlBuilder;
-import org.docheinstein.sqlbuilder.commons.SqlBuilderLogger;
 import org.docheinstein.sqlbuilder.models.SqlBindableObject;
 import org.docheinstein.sqlbuilder.models.Column;
 import org.docheinstein.sqlbuilder.statements.base.Statement;
@@ -146,7 +144,7 @@ public abstract class Expression implements SqlBindable {
     // Expression | Object
     protected Expression(Expression e, Object v, boolean enclosingParentheses,
                          boolean firstParentheses,  boolean secondParentheses) {
-        this(e, new SqlBindableObject(v), enclosingParentheses, firstParentheses, secondParentheses, 0);
+        this(e, SqlBindableObject.forObject(v), enclosingParentheses, firstParentheses, secondParentheses, 0);
 //        System.out.println("Constructor [3]: e | v");
     }
 
@@ -194,7 +192,7 @@ public abstract class Expression implements SqlBindable {
     // Column<T> | Object (T)
     protected <T> Expression(Column<T> c, T v, boolean enclosingParentheses,
                              boolean firstParentheses,  boolean secondParentheses) {
-        this(c, new SqlBindableObject(v), enclosingParentheses, firstParentheses, secondParentheses, 0);
+        this(c, SqlBindableObject.forObject(v), enclosingParentheses, firstParentheses, secondParentheses, 0);
 //        System.out.println("Constructor [6]: c | v");
     }
 
@@ -226,7 +224,7 @@ public abstract class Expression implements SqlBindable {
     // Object (T) | Object (T)
     protected <T> Expression(T v1, T v2, boolean enclosingParentheses,
                          boolean firstParentheses,  boolean secondParentheses) {
-        this(new SqlBindableObject(v1), new SqlBindableObject(v2),
+        this(SqlBindableObject.forObject(v1), SqlBindableObject.forObject(v2),
             enclosingParentheses, firstParentheses, secondParentheses, 0);
 //        System.out.println("Constructor [8]: v1 | v2");
     }
