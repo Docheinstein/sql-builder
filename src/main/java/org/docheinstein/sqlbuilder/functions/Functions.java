@@ -1,21 +1,21 @@
 package org.docheinstein.sqlbuilder.functions;
 
-import org.docheinstein.sqlbuilder.SqlBindable;
-
 /**
  * Contains the method for create SQL functions.
  *
  **/
-// WORK IN PROGRESS...
+// WORK [NOT] IN PROGRESS...
 public class Functions {
 
     public static class MySQL {
 
-        public static Addtime addtime(SqlBindable... params) { return new Addtime(params); }
+        // ADDTIME
+
+        public static Addtime addtime(Object... params) { return new Addtime(params); }
 
         public static class Addtime extends Function {
 
-            public Addtime(SqlBindable... params) {
+            public Addtime(Object... params) {
                 super(params);
             }
 

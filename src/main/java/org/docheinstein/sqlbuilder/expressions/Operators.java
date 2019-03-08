@@ -21,14 +21,12 @@ public class Operators {
 
     // +
 
+    public static Expression add(Object o1, Object o2) {
+        return new Add(o1, o2);
+    }
+
     public static class Add extends Expression {
-        public Add(Expression e1, Expression e2) { super(e1, e2); }
-        public Add(Expression e, Column c) { super(e, c); }
-        public Add(Expression e, Object v) { super(e, v); }
-        public <T> Add(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> Add(Column<T> c, Expression e) { super(c, e); }
-        public <T> Add(Column<T> c, T v) { super(c, v); }
-        public <T> Add(T v1, T v2) { super(v1, v2); }
+        public Add(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -38,14 +36,12 @@ public class Operators {
 
     // -
 
+    public static Expression sub(Object o1, Object o2) {
+        return new Sub(o1, o2);
+    }
+
     public static class Sub extends Expression {
-        public Sub(Expression e1, Expression e2) { super(e1, e2); }
-        public Sub(Expression e, Column c) { super(e, c); }
-        public Sub(Expression e, Object v) { super(e, v); }
-        public <T> Sub(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> Sub(Column<T> c, Expression e) { super(c, e); }
-        public <T> Sub(Column<T> c, T v) { super(c, v); }
-        public <T> Sub(T v1, T v2) { super(v1, v2); }
+        public Sub(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -55,14 +51,12 @@ public class Operators {
 
     // *
 
+    public static Expression mul(Object o1, Object o2) {
+        return new Mul(o1, o2);
+    }
+
     public static class Mul extends Expression {
-        public Mul(Expression e1, Expression e2) { super(e1, e2); }
-        public Mul(Expression e, Column c) { super(e, c); }
-        public Mul(Expression e, Object v) { super(e, v); }
-        public <T> Mul(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> Mul(Column<T> c, Expression e) { super(c, e); }
-        public <T> Mul(Column<T> c, T v) { super(c, v); }
-        public <T> Mul(T v1, T v2) { super(v1, v2); }
+        public Mul(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -72,14 +66,12 @@ public class Operators {
 
     // /
 
+    public static Expression div(Object o1, Object o2) {
+        return new Div(o1, o2);
+    }
+
     public static class Div extends Expression {
-        public Div(Expression e1, Expression e2) { super(e1, e2); }
-        public Div(Expression e, Column c) { super(e, c); }
-        public Div(Expression e, Object v) { super(e, v); }
-        public <T> Div(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> Div(Column<T> c, Expression e) { super(c, e); }
-        public <T> Div(Column<T> c, T v) { super(c, v); }
-        public <T> Div(T v1, T v2) { super(v1, v2); }
+        public Div(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -89,14 +81,12 @@ public class Operators {
 
     // %
 
+    public static Expression mod(Object o1, Object o2) {
+        return new Mod(o1, o2);
+    }
+
     public static class Mod extends Expression {
-        public Mod(Expression e1, Expression e2) { super(e1, e2); }
-        public Mod(Expression e, Column c) { super(e, c); }
-        public Mod(Expression e, Object v) { super(e, v); }
-        public <T> Mod(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> Mod(Column<T> c, Expression e) { super(c, e); }
-        public <T> Mod(Column<T> c, T v) { super(c, v); }
-        public <T> Mod(T v1, T v2) { super(v1, v2); }
+        public Mod(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -110,14 +100,12 @@ public class Operators {
 
     // =
 
+    public static Expression eq(Object o1, Object o2) {
+        return new Eq(o1, o2);
+    }
+
     public static class Eq extends Expression {
-        public Eq(Expression e1, Expression e2) { super(e1, e2); }
-        public Eq(Expression e, Column c) { super(e, c); }
-        public Eq(Expression e, Object v) { super(e, v); }
-        public <T> Eq(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> Eq(Column<T> c, Expression e) { super(c, e); }
-        public <T> Eq(Column<T> c, T v) { super(c, v); }
-        public <T> Eq(T v1, T v2) { super(v1, v2); }
+        public Eq(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -127,14 +115,12 @@ public class Operators {
 
     // <>
 
+    public static Expression neq(Object o1, Object o2) {
+        return new Neq(o1, o2);
+    }
+
     public static class Neq extends Expression {
-        public Neq(Expression e1, Expression e2) { super(e1, e2); }
-        public Neq(Expression e, Column c) { super(e, c); }
-        public Neq(Expression e, Object v) { super(e, v); }
-        public <T> Neq(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> Neq(Column<T> c, Expression e) { super(c, e); }
-        public <T> Neq(Column<T> c, T v) { super(c, v); }
-        public <T> Neq(T v1, T v2) { super(v1, v2); }
+        public Neq(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -144,14 +130,12 @@ public class Operators {
 
     // >
 
+    public static Expression gt(Object o1, Object o2) {
+        return new Gt(o1, o2);
+    }
+
     public static class Gt extends Expression {
-        public Gt(Expression e1, Expression e2) { super(e1, e2); }
-        public Gt(Expression e, Column c) { super(e, c); }
-        public Gt(Expression e, Object v) { super(e, v); }
-        public <T> Gt(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> Gt(Column<T> c, Expression e) { super(c, e); }
-        public <T> Gt(Column<T> c, T v) { super(c, v); }
-        public <T> Gt(T v1, T v2) { super(v1, v2); }
+        public Gt(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -161,14 +145,12 @@ public class Operators {
 
     // >=
 
+    public static Expression ge(Object o1, Object o2) {
+        return new Ge(o1, o2);
+    }
+
     public static class Ge extends Expression {
-        public Ge(Expression e1, Expression e2) { super(e1, e2); }
-        public Ge(Expression e, Column c) { super(e, c); }
-        public Ge(Expression e, Object v) { super(e, v); }
-        public <T> Ge(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> Ge(Column<T> c, Expression e) { super(c, e); }
-        public <T> Ge(Column<T> c, T v) { super(c, v); }
-        public <T> Ge(T v1, T v2) { super(v1, v2); }
+        public Ge(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -178,14 +160,12 @@ public class Operators {
 
     // <
 
+    public static Expression lt(Object o1, Object o2) {
+        return new Lt(o1, o2);
+    }
+
     public static class Lt extends Expression {
-        public Lt(Expression e1, Expression e2) { super(e1, e2); }
-        public Lt(Expression e, Column c) { super(e, c); }
-        public Lt(Expression e, Object v) { super(e, v); }
-        public <T> Lt(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> Lt(Column<T> c, Expression e) { super(c, e); }
-        public <T> Lt(Column<T> c, T v) { super(c, v); }
-        public <T> Lt(T v1, T v2) { super(v1, v2); }
+        public Lt(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -195,14 +175,12 @@ public class Operators {
 
     // <=
 
+    public static Expression le(Object o1, Object o2) {
+        return new Le(o1, o2);
+    }
+
     public static class Le extends Expression {
-        public Le(Expression e1, Expression e2) { super(e1, e2); }
-        public Le(Expression e, Column c) { super(e, c); }
-        public Le(Expression e, Object v) { super(e, v); }
-        public <T> Le(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> Le(Column<T> c, Expression e) { super(c, e); }
-        public <T> Le(Column<T> c, T v) { super(c, v); }
-        public <T> Le(T v1, T v2) { super(v1, v2); }
+        public Le(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -216,14 +194,12 @@ public class Operators {
 
     // AND
 
+    public static Expression and(Object o1, Object o2) {
+        return new And(o1, o2);
+    }
+
     public static class And extends Expression {
-        public And(Expression e1, Expression e2) { super(e1, e2); }
-        public And(Expression e, Column c) { super(e, c); }
-        public And(Expression e, Object v) { super(e, v); }
-        public <T> And(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> And(Column<T> c, Expression e) { super(c, e); }
-        public <T> And(Column<T> c, T v) { super(c, v); }
-        public <T> And(T v1, T v2) { super(v1, v2); }
+        public And(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -233,14 +209,12 @@ public class Operators {
 
     // OR
 
+    public static Expression or(Object o1, Object o2) {
+        return new Or(o1, o2);
+    }
+
     public static class Or extends Expression {
-        public Or(Expression e1, Expression e2) { super(e1, e2); }
-        public Or(Expression e, Column c) { super(e, c); }
-        public Or(Expression e, Object v) { super(e, v); }
-        public <T> Or(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> Or(Column<T> c, Expression e) { super(c, e); }
-        public <T> Or(Column<T> c, T v) { super(c, v); }
-        public <T> Or(T v1, T v2) { super(v1, v2); }
+        public Or(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -250,14 +224,12 @@ public class Operators {
 
     // XOR
 
+    public static Expression xor(Object o1, Object o2) {
+        return new Xor(o1, o2);
+    }
+
     public static class Xor extends Expression {
-        public Xor(Expression e1, Expression e2) { super(e1, e2); }
-        public Xor(Expression e, Column c) { super(e, c); }
-        public Xor(Expression e, Object v) { super(e, v); }
-        public <T> Xor(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> Xor(Column<T> c, Expression e) { super(c, e); }
-        public <T> Xor(Column<T> c, T v) { super(c, v); }
-        public <T> Xor(T v1, T v2) { super(v1, v2); }
+        public Xor(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -267,14 +239,12 @@ public class Operators {
 
     // LIKE
 
+    public static Expression like(Object o1, Object o2) {
+        return new Like(o1, o2);
+    }
+
     public static class Like extends Expression {
-        public Like(Expression e1, Expression e2) { super(e1, e2); }
-        public Like(Expression e, Column c) { super(e, c); }
-        public Like(Expression e, Object v) { super(e, v); }
-        public <T> Like(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> Like(Column<T> c, Expression e) { super(c, e); }
-        public <T> Like(Column<T> c, T v) { super(c, v); }
-        public <T> Like(T v1, T v2) { super(v1, v2); }
+        public Like(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -284,87 +254,18 @@ public class Operators {
 
     // BETWEEN
 
+    public static Expression between(Object o1, Object o2, Object o3) {
+        return new Between(o1, o2, o3);
+    }
+
     public static class Between extends Expression {
         /*
-            Expression | Expression, Expression
-            Expression | Expression, Column
-            Expression | Expression, Object
-
-            Expression | Column, Column
-            Expression | Column, Expression
-            Expression | Column, Object
-
-            Expression | Object, Object
-            Expression | Object, Expression
-
-
-            Column | Expression, Expression
-            Column | Expression, Column
-            Column | Expression, Object
-
-            Column | Column, Column
-            Column | Column, Expression
-            Column | Column, Object
-
-            Column | Object, Object
-            Column | Object, Expression
-
-
-            Object | Expression, Expression
-            Object | Expression, Column
-            Object | Expression, Object
-
-            Object | Column, Column
-            Object | Column, Expression
-            Object | Column, Object
-
-            Object | Object, Object
-            Object | Object, Expression
-        */
-
-        public Between(Expression _e, Expression e1, Expression e2) { super(_e, sanitized(e1.and(e2))); }
-        public Between(Expression _e, Expression e, Column c) { super(_e, sanitized(e.and(c))); }
-        public Between(Expression _e, Expression e, Object v) { super(_e, sanitized(e.and(v))); }
-
-        public <T> Between(Expression _e, Column<T> c1, Column<T> c2) { super(_e, sanitized(c1.and(c2))); }
-        public     Between(Expression _e, Column c, Expression e) { super(_e, sanitized(c.and(e))); }
-        public <T> Between(Expression _e, Column<T> c, T v) { super(_e, sanitized(c.and(v))); }
-
-        public <T> Between(Expression _e, T v1, T v2) { super(_e, sanitized(new And(v1, v2))); }
-        public     Between(Expression _e, Object v, Expression e) { super(_e, sanitized(new And(v, e))); }
-
-
-        public <T> Between(Column<T> _c, Expression e1, Expression e2) { super(_c, sanitized(e1.and(e2))); }
-        public <T> Between(Column<T> _c, Expression e, Column c) { super(_c, sanitized(e.and(c))); }
-        public <T> Between(Column<T> _c, Expression e, Object v) { super(_c, sanitized(e.and(v))); }
-
-        public <T> Between(Column<T> _c, Column<T> c1, Column<T> c2) { super(_c, sanitized(c1.and(c2))); }
-        public <T> Between(Column<T> _c, Column c, Expression e) { super(_c, sanitized(c.and(e))); }
-        public <T> Between(Column<T> _c, Column<T> c, T v) { super(_c, sanitized(c.and(v))); }
-
-        public <T> Between(Column<T> _c, T v1, T v2) { super(_c, sanitized(new And(v1, v2))); }
-        public <T> Between(Column<T> _c, Object v, Expression e) { super(_c, sanitized(new And(v, e))); }
-
-
-        public     Between(Object _v, Expression e1, Expression e2) { super(_v, sanitized(e1.and(e2))); }
-        public     Between(Object _v, Expression e, Column c) { super(_v, sanitized(e.and(c))); }
-        public     Between(Object _v, Expression e, Object v) { super(_v, sanitized(e.and(v))); }
-
-        public <T> Between(T _v, Column<T> c1, Column<T> c2) { super(_v, sanitized(c1.and(c2))); }
-        public     Between(Object _v, Column c, Expression e) { super(_v, sanitized(c.and(e))); }
-        public <T> Between(T _v, Column<T> c, T v) { super(_v, sanitized(c.and(v))); }
-
-        public <T> Between(T _v, T v1, T v2) { super(_v, sanitized(new And(v1, v2))); }
-        public     Between(Object _v, Object v, Expression e) { super(_v, sanitized(new And(v, e))); }
-
-        /**
-         * Saniteze the AND expression in BETWEEN ? AND ? since MySQL doesn't
-         * accept enclosing parentheses (i.e. BETWEEN ( ? AND ? ) )
-         * @param andExpr the AND expression to sanitize
-         * @return the sanitized AND expression
+         * Sanitize the AND expression in BETWEEN ? AND ? since MySQL doesn't
+         * accept enclosing parentheses (i.e. BETWEEN ( ? AND ? ) is not accepted).
+         * The correct one is (BETWEEN ? AND ?).
          */
-        private static Expression sanitized(Expression andExpr) {
-            return andExpr.parentheses(false, true, true);
+        public Between(Object o1, Object o2, Object o3) {
+            super(o1, Operators.and(o2, o3).parentheses(false, true, true));
         }
 
         @Override
@@ -373,12 +274,15 @@ public class Operators {
         }
     }
 
+
     // IS NULL
 
+    public static Expression isNull(Object o1) {
+        return new IsNull(o1);
+    }
+
     public static class IsNull extends Expression {
-        public IsNull(Expression e1) { super(e1, null, true, false, false, 0); }
-        public <T> IsNull(Column<T> c) { super(c, null, true, false, false, 0); }
-        public <T> IsNull(T v1) { super(v1, null); }
+        public IsNull(Object o1) { super(o1); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -388,10 +292,12 @@ public class Operators {
 
     // IS NOT NULL
 
+    public static Expression isNotNull(Object o1) {
+        return new IsNotNull(o1);
+    }
+
     public static class IsNotNull extends Expression {
-        public IsNotNull(Expression e1) { super(e1, null, true, false, false, 0); }
-        public <T> IsNotNull(Column<T> c) { super(c, null, true, false, false, 0); }
-        public <T> IsNotNull(T v1) { super(v1, null); }
+        public IsNotNull(Object o1) { super(o1); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -405,14 +311,12 @@ public class Operators {
 
     // &
 
+    public static Expression bitAnd(Object o1, Object o2) {
+        return new BitAnd(o1, o2);
+    }
+
     public static class BitAnd extends Expression {
-        public BitAnd(Expression e1, Expression e2) { super(e1, e2); }
-        public BitAnd(Expression e, Column c) { super(e, c); }
-        public BitAnd(Expression e, Object v) { super(e, v); }
-        public <T> BitAnd(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> BitAnd(Column<T> c, Expression e) { super(c, e); }
-        public <T> BitAnd(Column<T> c, T v) { super(c, v); }
-        public <T> BitAnd(T v1, T v2) { super(v1, v2); }
+        public BitAnd(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -422,31 +326,27 @@ public class Operators {
 
     // |
 
+    public static Expression bitOr(Object o1, Object o2) {
+        return new BitOr(o1, o2);
+    }
+
     public static class BitOr extends Expression {
-        public BitOr(Expression e1, Expression e2) { super(e1, e2); }
-        public BitOr(Expression e, Column c) { super(e, c); }
-        public BitOr(Expression e, Object v) { super(e, v); }
-        public <T> BitOr(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> BitOr(Column<T> c, Expression e) { super(c, e); }
-        public <T> BitOr(Column<T> c, T v) { super(c, v); }
-        public <T> BitOr(T v1, T v2) { super(v1, v2); }
+        public BitOr(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
-            return "|";
+            return "&";
         }
     }
 
     // ^
 
+    public static Expression bitXor(Object o1, Object o2) {
+        return new BitXor(o1, o2);
+    }
+
     public static class BitXor extends Expression {
-        public BitXor(Expression e1, Expression e2) { super(e1, e2); }
-        public BitXor(Expression e, Column c) { super(e, c); }
-        public BitXor(Expression e, Object v) { super(e, v); }
-        public <T> BitXor(Column<T> c1, Column<T> c2) { super(c1, c2); }
-        public <T> BitXor(Column<T> c, Expression e) { super(c, e); }
-        public <T> BitXor(Column<T> c, T v) { super(c, v); }
-        public <T> BitXor(T v1, T v2) { super(v1, v2); }
+        public BitXor(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -460,8 +360,12 @@ public class Operators {
 
     // IN
 
+    public static Expression in(Object o1, Object o2) {
+        return new In(o1, o2);
+    }
+
     public static class In extends Expression {
-        public <T> In(Column<T> c, Select s) { super(c, s); }
+        public In(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -471,8 +375,12 @@ public class Operators {
 
     // NOT IN
 
+    public static Expression notIn(Object o1, Object o2) {
+        return new NotIn(o1, o2);
+    }
+
     public static class NotIn extends Expression {
-        public <T> NotIn(Column<T> c, Select s) { super(c, s, true, false, true); }
+        public NotIn(Object o1, Object o2) { super(o1, o2); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -482,8 +390,12 @@ public class Operators {
 
     // SOME
 
+    public static Expression some(Object o1) {
+        return new Some(o1);
+    }
+
     public static class Some extends Expression {
-        public Some(Select s) { super(s, false, false, true); }
+        public Some(Object o1) { super(o1, null, false, false, true); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -493,8 +405,12 @@ public class Operators {
 
     // ANY
 
+    public static Expression any(Object o1) {
+        return new Any(o1);
+    }
+
     public static class Any extends Expression {
-        public Any(Select s) { super(s, false, false, true); }
+        public Any(Object o1) { super(o1, null, false, false, true); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -504,8 +420,12 @@ public class Operators {
 
     // ALL
 
+    public static Expression all(Object o1) {
+        return new All(o1);
+    }
+
     public static class All extends Expression {
-        public All(Select s) { super(s, false, false, true); }
+        public All(Object o1) { super(o1, null, false, false, true); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -515,8 +435,12 @@ public class Operators {
 
     // EXISTS
 
+    public static Expression exists(Object o1) {
+        return new Exists(o1);
+    }
+
     public static class Exists extends Expression {
-        public Exists(Select s) { super(s, false, false, true); }
+        public Exists(Object o1) { super(o1, null, false, false, true); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -524,8 +448,12 @@ public class Operators {
         }
     }
 
+    public static Expression notExists(Object o1) {
+        return new NotExists(o1);
+    }
+
     public static class NotExists extends Expression {
-        public NotExists(Select s) { super(s, false, false, true); }
+        public NotExists(Object o1) { super(o1, null, false, false, true); }
 
         @Override
         protected String getOperatorKeyword() {
@@ -536,6 +464,7 @@ public class Operators {
     // -------------------------------------------------------------------------
     // ----------------------------- BINARY ------------------------------------
     // -------------------------------------------------------------------------
+
 
     public static abstract class BinaryQueryStatement
         extends Expression implements QueryStatement {

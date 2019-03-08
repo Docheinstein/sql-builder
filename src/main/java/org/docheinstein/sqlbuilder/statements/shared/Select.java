@@ -61,7 +61,7 @@ public class Select implements QueryStatement {
      */
     public Select(String... columns) {
         for (String column : columns)
-            mColumns.add(new StringColumn(column));
+            mColumns.add(new AnonymousColumn(column));
     }
 
     /**
@@ -126,7 +126,7 @@ public class Select implements QueryStatement {
     }
 
 //    public Select orderBy(String column, OrderBy orderBy) {
-//        return orderBy(new StringColumn(column), orderBy);
+//        return orderBy(new AnonymousColumn(column), orderBy);
 //    }
 
     /**

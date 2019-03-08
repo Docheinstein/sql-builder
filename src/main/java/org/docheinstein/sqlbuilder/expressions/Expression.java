@@ -1,9 +1,8 @@
 package org.docheinstein.sqlbuilder.expressions;
 
 import org.docheinstein.sqlbuilder.SqlBindable;
+import org.docheinstein.sqlbuilder.commons.SqlBindableFactory;
 import org.docheinstein.sqlbuilder.models.SqlBindableObject;
-import org.docheinstein.sqlbuilder.models.Column;
-import org.docheinstein.sqlbuilder.statements.base.Statement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,26 +70,6 @@ public abstract class Expression implements SqlBindable {
      **/
     private boolean mSecondParentheses;
 
-    /*
-        Expression | Expression
-        Expression | Column
-        Expression | Object
-
-        Column<T> | Column<T>
-        Column<T> | Expression
-        Column<T> | Object (T)
-        Column | Statement       // Subqueries
-
-
-        Object | Object          // Quite dummy...
-        Object | Expression
-        Object (T) | Column<T>
-
-        Statement
-        Statement | Statement
-    */
-
-
     /**
      * Returns the string to used as operator between the two nested expressions.
      * <p>
@@ -99,273 +78,30 @@ public abstract class Expression implements SqlBindable {
      */
     protected abstract String getOperatorKeyword();
 
-    // -------------------------------------------------------------------------
-    // ------------------------- Parametrized parentheses ----------------------
-    // -------------------------------------------------------------------------
 
     /**
-     * Creates an expression between an {@link Expression} and an {@link Expression}.
-     * @param e1 the first expression
-     * @param e2 the second expression
-     * @param enclosingParentheses whether use outer parentheses for build the SQL string
-     * @param firstParentheses whether the first expression should be wrapped into parentheses
-     * @param secondParentheses whether the first expression should be wrapped into parentheses
+     * Creates an unary expression for the given bindable.
+     * <p>
+     * Add the enclosing parentheses, but not the parentheses for the operands.
+     * @param bindable1 the first bindable object
      */
-    // Expression | Expression
-    protected Expression(Expression e1, Expression e2, boolean enclosingParentheses,
-                         boolean firstParentheses,  boolean secondParentheses) {
-        this(e1, e2, enclosingParentheses, firstParentheses, secondParentheses, 0);
-//        System.out.println("Constructor [1]: e | e");
+    protected Expression(Object bindable1) {
+        this(bindable1, null);
     }
-
+    
     /**
-     * Creates an expression between an {@link Expression} and an {@link Column}.
-     * @param e the expression
-     * @param c the column
-     * @param enclosingParentheses whether use outer parentheses for build the SQL string
-     * @param firstParentheses whether the first expression should be wrapped into parentheses
-     * @param secondParentheses whether the first expression should be wrapped into parentheses
+     * Creates an expression between two generic {@link SqlBindable}.
+     * <p>
+     * Add the enclosing parentheses, but not the parentheses for the operands.
+     * @param bindable1 the first bindable object
+     * @param bindable2 the second bindable object
      */
-    // Expression | Column
-    protected Expression(Expression e, Column c, boolean enclosingParentheses,
-                         boolean firstParentheses,  boolean secondParentheses) {
-        this(e, c, enclosingParentheses, firstParentheses, secondParentheses, 0);
-//        System.out.println("Constructor [2]: e | c");
+    protected Expression(Object bindable1,
+                         Object bindable2) {
+        this(bindable1, bindable2, true, false, false);
     }
 
-    /**
-     * Creates an expression between an {@link Expression} and an {@link Object}.
-     * @param e the expression
-     * @param v the object (a primitive value, typically int, String, ...)
-     * @param enclosingParentheses whether use outer parentheses for build the SQL string
-     * @param firstParentheses whether the first expression should be wrapped into parentheses
-     * @param secondParentheses whether the first expression should be wrapped into parentheses
-     */
-    // Expression | Object
-    protected Expression(Expression e, Object v, boolean enclosingParentheses,
-                         boolean firstParentheses,  boolean secondParentheses) {
-        this(e, SqlBindableObject.forObject(v), enclosingParentheses, firstParentheses, secondParentheses, 0);
-//        System.out.println("Constructor [3]: e | v");
-    }
-
-    /**
-     * Creates an expression between a {@link Column} and a {@link Column}.
-     * @param c1 the first column
-     * @param c2 the second column
-     * @param enclosingParentheses whether use outer parentheses for build the SQL string
-     * @param firstParentheses whether the first expression should be wrapped into parentheses
-     * @param secondParentheses whether the first expression should be wrapped into parentheses
-     * @param <T> the type of the columns (must be the same)
-     */
-    // Column<T> | Column<T>
-    protected <T> Expression(Column<T> c1, Column<T> c2, boolean enclosingParentheses,
-                             boolean firstParentheses,  boolean secondParentheses) {
-        this(c1, c2, enclosingParentheses, firstParentheses, secondParentheses, 0);
-//        System.out.println("Constructor [4]: c1 | c2");
-    }
-
-    /**
-     * Creates an expression between a {@link Column} and an {@link Expression}.
-     * @param c the column
-     * @param e the expression
-     * @param enclosingParentheses whether use outer parentheses for build the SQL string
-     * @param firstParentheses whether the first expression should be wrapped into parentheses
-     * @param secondParentheses whether the first expression should be wrapped into parentheses
-     * @param <T> the type of the column
-     */
-    // Column<T> | Expression
-    protected <T> Expression(Column<T> c, Expression e, boolean enclosingParentheses,
-                             boolean firstParentheses,  boolean secondParentheses) {
-        this(c, e, enclosingParentheses, firstParentheses, secondParentheses, 0);
-//        System.out.println("Constructor [5]: c | e");
-    }
-
-    /**
-     * Creates an expression between a {@link Column} and an {@link Object}.
-     * @param c the column
-     * @param v the object (a primitive value, typically int, String, ...)
-     * @param enclosingParentheses whether use outer parentheses for build the SQL string
-     * @param firstParentheses whether the first expression should be wrapped into parentheses
-     * @param secondParentheses whether the first expression should be wrapped into parentheses
-     * @param <T> the type of the column and of the object
-     */
-    // Column<T> | Object (T)
-    protected <T> Expression(Column<T> c, T v, boolean enclosingParentheses,
-                             boolean firstParentheses,  boolean secondParentheses) {
-        this(c, SqlBindableObject.forObject(v), enclosingParentheses, firstParentheses, secondParentheses, 0);
-//        System.out.println("Constructor [6]: c | v");
-    }
-
-    /**
-     * Creates an expression between a {@link Column} and an {@link Statement}.
-     * @param c the column
-     * @param s the statement
-     * @param enclosingParentheses whether use outer parentheses for build the SQL string
-     * @param firstParentheses whether the first expression should be wrapped into parentheses
-     * @param secondParentheses whether the first expression should be wrapped into parentheses
-     * @param <T> the type of the column
-     */
-    // Column<T> | Statement
-    protected <T> Expression(Column<T> c, Statement s, boolean enclosingParentheses,
-                             boolean firstParentheses,  boolean secondParentheses) {
-        this(c, s, enclosingParentheses, firstParentheses, secondParentheses, 0);
-//        System.out.println("Constructor [7]: c | s");
-    }
-
-    /**
-     * Creates an expression between an {@link Object} and an {@link Object}.
-     * @param v1 the first object (a primitive value, typically int, String, ...)
-     * @param v2 the first object (a primitive value, typically int, String, ...)
-     * @param enclosingParentheses whether use outer parentheses for build the SQL string
-     * @param firstParentheses whether the first expression should be wrapped into parentheses
-     * @param secondParentheses whether the first expression should be wrapped into parentheses
-     * @param <T> the type of the objects (must be the same)
-     */
-    // Object (T) | Object (T)
-    protected <T> Expression(T v1, T v2, boolean enclosingParentheses,
-                         boolean firstParentheses,  boolean secondParentheses) {
-        this(SqlBindableObject.forObject(v1), SqlBindableObject.forObject(v2),
-            enclosingParentheses, firstParentheses, secondParentheses, 0);
-//        System.out.println("Constructor [8]: v1 | v2");
-    }
-
-    /**
-     * Creates an expression for a single {@link Statement}.
-     * @param s the statement
-     * @param enclosingParentheses whether use outer parentheses for build the SQL string
-     * @param firstParentheses whether the first expression should be wrapped into parentheses
-     * @param secondParentheses whether the first expression should be wrapped into parentheses
-     */
-    // Statement
-    protected Expression(Statement s, boolean enclosingParentheses,
-                          boolean firstParentheses,  boolean secondParentheses) {
-        this(null, s, enclosingParentheses, firstParentheses, secondParentheses, 0);
-//        System.out.println("Constructor [9]: s");
-    }
-
-    /**
-     * Creates an expression between a {@link Statement} and a {@link Statement}.
-     * @param s1 the first statement
-     * @param s2 the second statement
-     * @param enclosingParentheses whether use outer parentheses for build the SQL string
-     * @param firstParentheses whether the first expression should be wrapped into parentheses
-     * @param secondParentheses whether the first expression should be wrapped into parentheses
-     */
-    // Statement | Statement
-    protected Expression(Statement s1, Statement s2, boolean enclosingParentheses,
-                          boolean firstParentheses,  boolean secondParentheses) {
-        this(s1, s2, enclosingParentheses, firstParentheses, secondParentheses, 0);
-//        System.out.println("Constructor [10]: s1 | s2");
-    }
-
-    // -------------------------------------------------------------------------
-    // --------------------------- Default parentheses -------------------------
-    // -------------------------------------------------------------------------
-
-    /**
-     * Creates an expression between an {@link Expression} and a {@link Column}.
-     * @param e the expression
-     * @param c the column
-     */
-    // Expression | Column
-    public Expression(Expression e, Column c) {
-        this(e, c, true, false, false);
-    }
-
-    /**
-     * Creates an expression between an {@link Expression} and an {@link Object}.
-     * @param e the expression
-     * @param v the object (a primitive value, typically int, String, ...)
-     */
-    // Expression | Object
-    public Expression(Expression e, Object v) {
-        this(e, v, true, false, false);
-    }
-
-    /**
-     * Creates an expression between an {@link Expression} and an {@link Expression}.
-     * @param e1 the first expression
-     * @param e2 the second expression
-     */
-    // Expression | Expression
-    public Expression(Expression e1, Expression e2) {
-        this(e1, e2, true, false, false);
-    }
-
-    /**
-     * Creates an expression between a {@link Column} and a {@link Column}.
-     * @param c1 the first column
-     * @param c2 the first column
-     * @param <T> the type of the columns (must be the same)
-     */
-    // Column<T> | Column<T>
-    public <T> Expression(Column<T> c1, Column<T> c2) {
-        this(c1, c2, true, false, false);
-    }
-
-    /**
-     * Creates an expression between a {@link Column} and an {@link Expression}.
-     * @param c the column
-     * @param e the expression
-     * @param <T> the type of the column
-     */
-    // Column<T> | Expression
-    public <T> Expression(Column<T> c, Expression e) {
-        this(c, e, true, false, false);
-    }
-
-    /**
-     * Creates an expression between a {@link Column} and an {@link Object}.
-     * @param c the column
-     * @param v the object (a primitive value, typically int, String, ...)
-     * @param <T> the type of the column and of the object
-     */
-    // Column<T> | Object (T)
-    public <T> Expression(Column<T> c, T v) {
-        this(c, v, true, false, false);
-    }
-
-    /**
-     * Creates an expression between a {@link Column} and an {@link Statement}.
-     * @param c the column
-     * @param s the statement
-     * @param <T> the type of the column 
-     */
-    // Column<T> | Statement
-    public <T> Expression(Column<T> c, Statement s) {
-        this(c, s, true, false, false);
-    }
-
-    /**
-     * Creates an expression between a {@link Object} and an {@link Object}.
-     * @param v1 the first object (a primitive value, typically int, String, ...)
-     * @param v2 the first object (a primitive value, typically int, String, ...)
-     * @param <T> the type of the objects (must be the same)
-     */
-    // Object (T) | Object (T)
-    public <T> Expression(T v1, T v2) {
-        this(v1, v2, true, false, false);
-    }
-
-    /**
-     * Creates an expression for a single {@link Statement}.
-     * @param s the statement
-     */
-    // Statement
-    public Expression(Statement s) {
-        this(s, true, false, false);
-    }
-
-    /**
-     * Creates an expression between a {@link Statement} and a {@link Statement}.
-     * @param s1 the first statement
-     * @param s2 the second statement
-     */
-    // Statement | Statement
-    public Expression(Statement s1, Statement s2) {
-        this(s1, s2, true, false, false);
-    }
-
+    
     /**
      * Creates an expression between two generic {@link SqlBindable}.
      * @param bindable1 the first bindable object
@@ -373,22 +109,21 @@ public abstract class Expression implements SqlBindable {
      * @param enclosingParentheses whether use outer parentheses for build the SQL string
      * @param firstParentheses whether the first expression should be wrapped into parentheses
      * @param secondParentheses whether the first expression should be wrapped into parentheses
-     * @param dummy used for differentiate this method from the generic method
-     *              because of type erasure
      */
-    protected Expression(SqlBindable bindable1, 
-                         SqlBindable bindable2, 
+    protected Expression(Object bindable1, 
+                         Object bindable2, 
                          boolean enclosingParentheses, 
                          boolean firstParentheses,
-                         boolean secondParentheses,
-                         int dummy) {
-        mBindable1 = bindable1;
-        mBindable2 = bindable2;
+                         boolean secondParentheses) {
+        mBindable1 = SqlBindableFactory.of(bindable1);
+        mBindable2 = SqlBindableFactory.of(bindable2);
         mOperatorKeyword = getOperatorKeyword();
         mEnclosingParentheses = enclosingParentheses;
         mFirstParentheses = firstParentheses;
         mSecondParentheses = secondParentheses;
     }
+    
+    
 
     // -------------------------------------------------------------------------
     // ---------------------------- ARITHMETIC ---------------------------------
@@ -396,43 +131,23 @@ public abstract class Expression implements SqlBindable {
 
     // +
 
-    public Expression add(Expression e) { return new Operators.Add(this, e); }
-
-    public Expression add(Object v) { return new Operators.Add(this, v); }
-
-    public Expression add(Column c) { return new Operators.Add(this, c); }
+    public Expression add(Object o) { return Operators.add(this, o); }
 
     // -
 
-    public Expression sub(Expression e) { return new Operators.Sub(this, e); }
-
-    public Expression sub(Object v) { return new Operators.Sub(this, v); }
-
-    public Expression sub(Column c) { return new Operators.Sub(this, c); }
+    public Expression sub(Object o) { return Operators.sub(this, o); }
 
     // *
 
-    public Expression mul(Expression e) { return new Operators.Mul(this, e); }
-
-    public Expression mul(Object v) { return new Operators.Mul(this, v); }
-
-    public Expression mul(Column c) { return new Operators.Mul(this, c); }
+    public Expression mul(Object o) { return Operators.mul(this, o); }
 
     // /
 
-    public Expression div(Expression e) { return new Operators.Div(this, e); }
-
-    public Expression div(Object v) { return new Operators.Div(this, v); }
-
-    public Expression div(Column c) { return new Operators.Div(this, c); }
+    public Expression div(Object o) { return Operators.div(this, o); }
 
     // %
 
-    public Expression mod(Expression e) { return new Operators.Mod(this, e); }
-
-    public Expression mod(Object v) { return new Operators.Mod(this, v); }
-
-    public Expression mod(Column c) { return new Operators.Mod(this, c); }
+    public Expression mod(Object o) { return Operators.mod(this, o); }
 
     // -------------------------------------------------------------------------
     // ---------------------------- COMPARISON ---------------------------------
@@ -440,52 +155,27 @@ public abstract class Expression implements SqlBindable {
 
     // =
 
-    public Expression eq(Expression e) { return new Operators.Eq(this, e); }
-
-    public Expression eq(Object v) { return new Operators.Eq(this, v); }
-
-    public Expression eq(Column c) { return new Operators.Eq(this, c); }
-
+    public Expression eq(Object o) { return Operators.eq(this, o); }
 
     // =
 
-    public Expression neq(Expression e) { return new Operators.Neq(this, e); }
-
-    public Expression neq(Object v) { return new Operators.Neq(this, v); }
-
-    public Expression neq(Column c) { return new Operators.Neq(this, c); }
+    public Expression neq(Object o) { return Operators.neq(this, o); }
 
     // >
 
-    public Expression gt(Expression e) { return new Operators.Gt(this, e); }
-
-    public Expression gt(Object v) { return new Operators.Gt(this, v); }
-
-    public Expression gt(Column c) { return new Operators.Gt(this, c); }
+    public Expression gt(Object o) { return Operators.gt(this, o); }
 
     // >=
 
-    public Expression ge(Expression e) { return new Operators.Ge(this, e); }
-
-    public Expression ge(Object v) { return new Operators.Ge(this, v); }
-
-    public Expression ge(Column c) { return new Operators.Ge(this, c); }
+    public Expression ge(Object o) { return Operators.ge(this, o); }
 
     // <
 
-    public Expression lt(Expression e) { return new Operators.Lt(this, e); }
-
-    public Expression lt(Object v) { return new Operators.Lt(this, v); }
-
-    public Expression lt(Column c) { return new Operators.Lt(this, c); }
+    public Expression lt(Object o) { return Operators.lt(this, o); }
 
     // <=
 
-    public Expression le(Expression e) { return new Operators.Le(this, e); }
-
-    public Expression le(Object v) { return new Operators.Le(this, v); }
-
-    public Expression le(Column c) { return new Operators.Le(this, c); }
+    public Expression le(Object o) { return Operators.le(this, o); }
 
 
     // -------------------------------------------------------------------------
@@ -494,90 +184,52 @@ public abstract class Expression implements SqlBindable {
 
     // AND
 
-    public Expression and(Expression e) { return new Operators.And(this, e); }
-
-    public Expression and(Object v) { return new Operators.And(this, v); }
-
-    public Expression and(Column c) { return new Operators.And(this, c); }
+    public Expression and(Object o) { return Operators.and(this, o); }
 
     // OR
 
-    public Expression or(Expression e) { return new Operators.Or(this, e); }
-
-    public Expression or(Object v) { return new Operators.Or(this, v); }
-
-    public Expression or(Column c) { return new Operators.Or(this, c); }
+    public Expression or(Object o) { return Operators.or(this, o); }
 
     // XOR
 
-    public Expression xor(Expression e) { return new Operators.Xor(this, e); }
-
-    public Expression xor(Object v) { return new Operators.Xor(this, v); }
-
-    public Expression xor(Column c) { return new Operators.Xor(this, c); }
+    public Expression xor(Object o) { return Operators.xor(this, o); }
 
     // LIKE
 
-    public Expression like(Expression e) { return new Operators.Like(this, e); }
-
-    public Expression like(Object v) { return new Operators.Like(this, v); }
-
-    public Expression like(Column c) { return new Operators.Like(this, c); }
+    public Expression like(Object o) { return Operators.like(this, o); }
 
     // BETWEEN
 
-    public Expression between(Expression e1, Expression e2) { return new Operators.Between(this, e1, e2); }
-
-    public Expression between(Expression e, Column c) { return new Operators.Between(this, e, c); }
-
-    public Expression between(Expression e, Object v) { return new Operators.Between(this, e, v); }
-
-    public <T> Expression between(Column<T> c1, Column<T> c2) { return new Operators.Between(this, c1, c2); }
-
-    public <T> Expression between(Column<T> c, Expression e) { return new Operators.Between(this, c, e); }
-
-    public <T> Expression between(Column<T> c, T v) { return new Operators.Between(this, c, v); }
-
-    public <T> Expression between(T v1, T v2) { return new Operators.Between(this, v1, v2); }
-
-    public <T> Expression between(Object v, Expression e) { return new Operators.Between(this, v, e); }
-
+    public Expression between(Object o1, Object o2) { return Operators.between(this, o1, o2); }
+    
     // IS NULL
 
-    public Expression isNull() { return new Operators.IsNull(this); }
+    public Expression isNull() { return Operators.isNull(this); }
 
     // IS NOT NULL
 
-    public Expression isNotNull() { return new Operators.IsNotNull(this); }
+    public Expression isNotNull() { return Operators.isNotNull(this); }
 
     // -------------------------------------------------------------------------
     // ----------------------------- BITWISE -----------------------------------
     // -------------------------------------------------------------------------
 
-    public Expression bitAnd(Expression e) { return new Operators.BitAnd(this, e); }
+    // &
+    
+    public Expression bitAnd(Object o) { return Operators.bitAnd(this, o); }
 
-    public Expression bitAnd(Object v) { return new Operators.BitAnd(this, v); }
+    // |
+    
+    public Expression bitOr(Object o) { return Operators.bitOr(this, o); }
 
-    public Expression bitAnd(Column c) { return new Operators.BitAnd(this, c); }
-
-    public Expression bitOr(Expression e) { return new Operators.BitOr(this, e); }
-
-    public Expression bitOr(Object v) { return new Operators.BitOr(this, v); }
-
-    public Expression bitOr(Column c) { return new Operators.BitOr(this, c); }
-
-    public Expression bitXor(Expression e) { return new Operators.BitXor(this, e); }
-
-    public Expression bitXor(Object v) { return new Operators.BitXor(this, v); }
-
-    public Expression bitXor(Column c) { return new Operators.BitXor(this, c); }
-
+    // ^
+    
+    public Expression bitXor(Object o) { return Operators.bitXor(this, o); }
 
     // -------------------------------------------------------------------------
     // ----------------------------- UTILITIES ---------------------------------
     // -------------------------------------------------------------------------
-
-
+    
     /**
      * Sets the parentheses for this expression.
      * @param enclosing whether this expression should be enclosed in parentheses
@@ -587,8 +239,7 @@ public abstract class Expression implements SqlBindable {
      */
     public Expression parentheses(boolean enclosing, boolean first,
                                            boolean second) {
-        return
-            this
+        return this
                 .enclosingParentheses(enclosing)
                 .firstParentheses(first)
                 .secondParentheses(second);
@@ -723,9 +374,5 @@ public abstract class Expression implements SqlBindable {
             mEnclosingParentheses ?
                 "(" + internalPattern + ")" :
                 internalPattern;
-//        System.out.println("B1 + " + (bindable1 != null ? bindable1.getClass().getSimpleName() : "null"));
-//        System.out.println("B2 + " + (bindable2 != null ? bindable2.getClass().getSimpleName() : "null"));
-//        System.out.println("B1 + " + (bindable1 != null ? bindable1.toSql() : "null"));
-//        System.out.println("B2 + " + (bindable2 != null ? bindable2.toSql() : "null"));
     }
 }
