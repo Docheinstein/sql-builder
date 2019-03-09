@@ -115,8 +115,10 @@ public abstract class Expression implements SqlBindable {
                          boolean enclosingParentheses, 
                          boolean firstParentheses,
                          boolean secondParentheses) {
-        mBindable1 = SqlBindableFactory.of(bindable1);
-        mBindable2 = SqlBindableFactory.of(bindable2);
+        // We should not wrap null values in SqlBindables, instead we have to
+        // assume that if a bindable is null then the expression is somehow unary.
+        mBindable1 = bindable1 == null ? null : SqlBindableFactory.of(bindable1);
+        mBindable2 = bindable2 == null ? null : SqlBindableFactory.of(bindable2);
         mOperatorKeyword = getOperatorKeyword();
         mEnclosingParentheses = enclosingParentheses;
         mFirstParentheses = firstParentheses;
